@@ -120,6 +120,31 @@ test("novo usuário abre o onboarding assistido sem dados inventados", async () 
   assert.doesNotMatch(html, /og-user-choice\.png|og\.png/);
 });
 
+test("a navegação crítica usa links nativos compatíveis com o runtime publicado", async () => {
+  const [home, onboarding] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/novo-usuario/NewUserOnboarding.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.doesNotMatch(home, /from ["']next\/link["']/);
+  assert.doesNotMatch(onboarding, /from ["']next\/link["']/);
+  assert.match(home, /<a className="identity-option identity-option-primary" href="\/itapoa">/);
+  assert.match(home, /<a className="identity-option" href="\/novo-usuario">/);
+});
+
+test("o onboarding alimenta o perfil usado pelo matchmaking oficial", async () => {
+  const [experience, map, bridge] = await Promise.all([
+    readFile(new URL("../app/itapoa/ItapoaExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/itapoa/OpportunityMap.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../lib/profile-bridge.ts", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(experience, /providerProfileFromOnboarding/);
+  assert.match(experience, /matchById\.get\(opportunity\.opportunityId\)\?\.score/);
+  assert.match(map, /prefers-reduced-motion/);
+  assert.doesNotMatch(bridge, /matchOpportunity/);
+});
+
 test("o card social novo está empacotado sem substituir o original", async () => {
   await Promise.all([
     access(new URL("../public/og.png", import.meta.url)),

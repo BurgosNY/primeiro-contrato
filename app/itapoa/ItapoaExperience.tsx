@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { readSupplierProfile } from "@/lib/demo-profile";
+import { providerProfileFromOnboarding } from "@/lib/profile-bridge";
 import type {
   CapabilityId,
   MatchApiResponse,
@@ -97,9 +99,28 @@ export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, in
 
   useEffect(() => {
     let active = true;
-    fetch("/api/itapoa/state", { cache: "no-store" }).then(async (response) => {
-      if (!response.ok) throw new Error("Não foi possível carregar os dados persistidos."); return response.json() as Promise<PersistedState>;
-    }).then((state) => { if (active) applyState(state); }).catch((error) => { if (active) setRefreshMessage(error instanceof Error ? error.message : "Falha ao carregar o banco."); });
+    const loadState = async () => {
+      try {
+        const response = await fetch("/api/itapoa/state", { cache: "no-store" });
+        if (!response.ok) throw new Error("Não foi possível carregar os dados persistidos.");
+        let state = await response.json() as PersistedState;
+
+        const onboardingProfile = readSupplierProfile();
+        if (onboardingProfile.source === "onboarding" && onboardingProfile.updatedAt !== state.profile.updatedAt) {
+          const profileResponse = await fetch("/api/itapoa/profile", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ profile: providerProfileFromOnboarding(onboardingProfile, state.profile) }),
+          });
+          if (profileResponse.ok) state = await profileResponse.json() as PersistedState;
+        }
+
+        if (active) applyState(state);
+      } catch (error) {
+        if (active) setRefreshMessage(error instanceof Error ? error.message : "Falha ao carregar o banco.");
+      }
+    };
+    void loadState();
     return () => { active = false; };
   }, []);
 
@@ -298,6 +319,7 @@ export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, in
                 selectedId={selected.opportunityId}
                 companyName={profile.displayName}
                 companyInitials={profileInitials}
+                radiusKm={profile.baseLocation.serviceRadiusKm}
                 onSelect={chooseOpportunity}
               />
             ) : <div className="opportunity-list">

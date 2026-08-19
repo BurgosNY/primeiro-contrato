@@ -1,5 +1,6 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
 
 type MapOpportunity = {
@@ -15,6 +16,7 @@ type OpportunityMapProps = {
   selectedId: string;
   companyName: string;
   companyInitials: string;
+  radiusKm: number;
   onSelect: (id: string) => void;
 };
 
@@ -27,7 +29,7 @@ const LOCATIONS: Record<string, [number, number]> = {
 
 const COMPANY_LOCATION: [number, number] = [-26.1162, -48.6147];
 
-export function OpportunityMap({ opportunities, selectedId, companyName, companyInitials, onSelect }: OpportunityMapProps) {
+export function OpportunityMap({ opportunities, selectedId, companyName, companyInitials, radiusKm, onSelect }: OpportunityMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<import("leaflet").Map | null>(null);
   const markersRef = useRef<Map<string, import("leaflet").Marker>>(new Map());
@@ -80,7 +82,7 @@ export function OpportunityMap({ opportunities, selectedId, companyName, company
         .addTo(map)
         .bindTooltip(companyTooltip, { direction: "top", offset: [0, -15] });
       L.circle(COMPANY_LOCATION, {
-        radius: 40_000,
+        radius: radiusKm * 1_000,
         color: "#0f6b57",
         weight: 1,
         opacity: 0.38,
@@ -99,13 +101,17 @@ export function OpportunityMap({ opportunities, selectedId, companyName, company
 
         const icon = L.divIcon({
           className: "map-marker-shell",
-          html: `<button class="map-marker opportunity-marker${opportunity.id === selectedIdRef.current ? " selected" : ""}" type="button" aria-label="${opportunity.service.replaceAll('"', "&quot;")}"><span>${opportunity.match}%</span></button>`,
+          html: `<span class="map-marker opportunity-marker${opportunity.id === selectedIdRef.current ? " selected" : ""}" aria-hidden="true"><span>${opportunity.match}%</span></span>`,
           iconSize: [46, 46],
           iconAnchor: [23, 23],
         });
         const marker = L.marker(point, { icon, title: opportunity.service }).addTo(map);
         marker.on("click", () => onSelectRef.current(opportunity.id));
-        marker.bindTooltip(`<strong>${opportunity.activity}</strong><br>${opportunity.service}`, {
+        const tooltip = document.createElement("span");
+        const activity = document.createElement("strong");
+        activity.textContent = opportunity.activity;
+        tooltip.append(activity, document.createElement("br"), opportunity.service);
+        marker.bindTooltip(tooltip, {
           direction: "top",
           offset: [0, -17],
         });
@@ -121,7 +127,7 @@ export function OpportunityMap({ opportunities, selectedId, companyName, company
       mapRef.current?.remove();
       mapRef.current = null;
     };
-  }, [companyInitials, companyName, opportunities, retryKey]);
+  }, [companyInitials, companyName, opportunities, radiusKm, retryKey]);
 
   useEffect(() => {
     const marker = markersRef.current.get(selectedId);

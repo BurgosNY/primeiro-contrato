@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+/* eslint-disable @next/next/no-html-link-for-pages -- native navigation avoids the current Vinext Link runtime failure */
 import { FormEvent, useEffect, useRef, useState } from "react";
 
 import type { CompanyDocumentPreview, CompanyResearch, OnboardingChatMessage, OnboardingChatReply, OnboardingStage } from "@/lib/onboarding-contract";
@@ -135,8 +135,8 @@ export function NewUserOnboarding() {
   return (
     <main className="onboarding-page">
       <header className="onboarding-topbar">
-        <Link className="identity-brand" href="/" aria-label="Primeiro Contrato — início"><span className="brand-mark">1º</span><span>Primeiro Contrato</span></Link>
-          <div><span>Perfil {stageProgress[stage]}% · salvo</span><button type="button" onClick={restart}>Recomeçar</button><Link href="/">Trocar usuário</Link></div>
+        <a className="identity-brand" href="/" aria-label="Primeiro Contrato — início"><span className="brand-mark">1º</span><span>Primeiro Contrato</span></a>
+          <div><span>Perfil {stageProgress[stage]}% · salvo</span><button type="button" onClick={restart}>Recomeçar</button><a href="/">Trocar usuário</a></div>
       </header>
 
       <section className="onboarding-chat" aria-label="Onboarding assistido" aria-busy={sending}>
@@ -159,7 +159,7 @@ export function NewUserOnboarding() {
 
           {sending ? stage === "collect_company" ? <CompanySearchLoading step={loadingStep} /> : <AgentMessage status><span className="onboarding-spinner" aria-hidden="true" />Estou organizando sua resposta e atualizando o perfil…</AgentMessage> : null}
           {error ? <div className="onboarding-error" role="alert"><span>!</span><div><strong>Não consegui continuar</strong><p>{error}</p></div><button type="button" onClick={() => void sendMessage(lastFailedMessage, false)}>Tentar novamente</button></div> : null}
-          {!sending && quickReplies.length ? <div className="onboarding-quick" aria-label="Respostas sugeridas">{quickReplies.map((label) => label === "Buscar oportunidades" ? <Link href="/itapoa" key={label}>Ver oportunidades →</Link> : <button type="button" key={label} onClick={() => void sendMessage(label)}>✓ {label}</button>)}</div> : null}
+          {!sending && quickReplies.length ? <div className="onboarding-quick" aria-label="Respostas sugeridas">{quickReplies.map((label) => label === "Buscar oportunidades" ? <a href="/itapoa" key={label}>Ver oportunidades →</a> : <button type="button" key={label} onClick={() => void sendMessage(label)}>✓ {label}</button>)}</div> : null}
           <div ref={endRef} />
         </div>
 
