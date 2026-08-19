@@ -26,8 +26,8 @@ test("a raiz pública oferece exatamente os dois usuários pedidos", async () =>
 
   assert.match(html, /<title>Primeiro Contrato — escolha seu usuário<\/title>/i);
   assert.match(html, /Quem está entrando\?/);
-  assert.match(html, /Emprenteiro em Itapoá - SC/);
-  assert.match(html, /Novo usuário/);
+  assert.match(html, /Empreiteiro em Itapoá — SC/);
+  assert.match(html, /Cadastrar uma empresa/);
   assert.match(html, /href="\/itapoa"/);
   assert.match(html, /href="\/novo-usuario"/);
   assert.match(html, /og-user-choice\.png/);
@@ -38,20 +38,23 @@ test("o usuário de Itapoá abre a experiência existente sem regressão", async
   const html = await renderedHtml("/itapoa");
 
   assert.match(html, /<title>Empreiteiro em Itapoá \| Primeiro Contrato<\/title>/i);
-  assert.match(html, /Boas oportunidades encontraram você\./);
-  assert.match(html, /Todas as oportunidades/);
-  assert.match(html, /Instalação de calhas e rufos/);
+  assert.match(html, /Oportunidades para/);
   assert.match(html, /JM Reparos/);
+  assert.match(html, /Ordenadas por aderência/);
+  assert.match(html, /Sumário/);
+  assert.match(html, /Mapa/);
+  assert.match(html, /Instalação de calhas e rufos/);
   assert.doesNotMatch(html, /og-user-choice\.png|og\.png/);
 });
 
-test("novo usuário permanece numa rota separada e honesta", async () => {
+test("novo usuário abre o onboarding assistido sem dados inventados", async () => {
   const html = await renderedHtml("/novo-usuario");
 
   assert.match(html, /<title>Novo usuário \| Primeiro Contrato<\/title>/i);
-  assert.match(html, /A próxima experiência começa aqui\./);
-  assert.match(html, /Experiência aguardando definição/);
-  assert.match(html, /Nenhum perfil foi criado ainda\./);
+  assert.match(html, /Agente Primeiro Contrato/);
+  assert.match(html, /Envie o CNPJ/);
+  assert.match(html, /Digite o CNPJ e, se quiser, o site da empresa/);
+  assert.doesNotMatch(html, /Cadastro localizado|Fontes encontradas/);
   assert.doesNotMatch(html, /og-user-choice\.png|og\.png/);
 });
 

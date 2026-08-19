@@ -1,6 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+import { companyInitials, DEFAULT_DEMO_PROFILE, readPlatformState, readSupplierProfile, type SupplierDemoProfile, writePlatformState } from "@/lib/demo-profile";
+import { matchOpportunity } from "@/lib/matchmaking";
+import { OpportunityMap } from "./OpportunityMap";
 
 type Opportunity = {
   id: string;
@@ -214,30 +218,68 @@ const formatDeadline = (value: string) =>
     .format(new Date(value))
     .replace(".", "");
 
+const formatCurrency = (value: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(value);
+
 export function ItapoaExperience() {
   const [selectedId, setSelectedId] = useState("12908");
+  const [viewMode, setViewMode] = useState<"summary" | "map">("summary");
   const [onlyHighMatch, setOnlyHighMatch] = useState(false);
   const [panelMode, setPanelMode] = useState<"detail" | "conversation" | "application">("detail");
   const [conversationStep, setConversationStep] = useState(0);
+  const [conversationAnswers, setConversationAnswers] = useState<{ visit?: string; materials?: string }>({});
   const [profileOpen, setProfileOpen] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
+  const [supplierProfile, setSupplierProfile] = useState<SupplierDemoProfile>(DEFAULT_DEMO_PROFILE);
+  const [platformHydrated, setPlatformHydrated] = useState(false);
 
-  const selected = opportunities.find((item) => item.id === selectedId) ?? opportunities[0];
-  const visibleOpportunities = useMemo(
-    () => opportunities.filter((item) => !onlyHighMatch || item.match >= 85),
-    [onlyHighMatch],
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setSupplierProfile(readSupplierProfile());
+      const saved = readPlatformState();
+      if (saved) {
+        setSelectedId(saved.selectedId);
+        setViewMode(saved.viewMode);
+        setOnlyHighMatch(saved.onlyHighMatch);
+      }
+      setPlatformHydrated(true);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!platformHydrated) return;
+    writePlatformState({ selectedId, viewMode, onlyHighMatch });
+  }, [onlyHighMatch, platformHydrated, selectedId, viewMode]);
+
+  const rankedOpportunities = useMemo(
+    () => opportunities
+      .map((opportunity) => ({ ...opportunity, matchResult: matchOpportunity(opportunity, supplierProfile) }))
+      .sort((a, b) => b.matchResult.score - a.matchResult.score),
+    [supplierProfile],
   );
+  const highMatchCount = rankedOpportunities.filter((item) => item.matchResult.score >= 75).length;
+  const highFilterActive = onlyHighMatch && highMatchCount > 0;
+
+  const selected = rankedOpportunities.find((item) => item.id === selectedId) ?? rankedOpportunities[0];
+  const visibleOpportunities = useMemo(
+    () => rankedOpportunities.filter((item) => !highFilterActive || item.matchResult.score >= 75),
+    [highFilterActive, rankedOpportunities],
+  );
+  const profileInitials = companyInitials(supplierProfile.companyName);
+  const profileCompletion = supplierProfile.source === "onboarding" ? 100 : 78;
 
   const chooseOpportunity = (id: string) => {
     setSelectedId(id);
     setPanelMode("detail");
     setConversationStep(0);
+    setConversationAnswers({});
     setDraftReady(false);
   };
 
   const startConversation = () => {
     setPanelMode("conversation");
     setConversationStep(0);
+    setConversationAnswers({});
   };
 
   return (
@@ -247,41 +289,49 @@ export function ItapoaExperience() {
           <span className="brand-mark">1º</span><span>Primeiro Contrato</span>
         </a>
         <nav className="nav" aria-label="Navegação principal">
-          <button className="nav-item active" type="button" onClick={() => setPanelMode("detail")}><span aria-hidden="true">◫</span> Oportunidades <b>12</b></button>
-          <button className="nav-item" type="button" onClick={startConversation}><span aria-hidden="true">◎</span> Conversa guiada</button>
-          <button className="nav-item" type="button" onClick={() => setPanelMode("application")}><span aria-hidden="true">✓</span> Aplicação <b>1</b></button>
+          <button className={`nav-item ${panelMode === "detail" ? "active" : ""}`} type="button" onClick={() => setPanelMode("detail")}><span aria-hidden="true">◫</span> Oportunidades <b>{rankedOpportunities.length}</b></button>
+          <button className={`nav-item ${panelMode === "conversation" ? "active" : ""}`} type="button" onClick={startConversation}><span aria-hidden="true">◎</span> Conversa guiada</button>
+          <button className={`nav-item ${panelMode === "application" ? "active" : ""}`} type="button" onClick={() => setPanelMode("application")}><span aria-hidden="true">✓</span> Participação <b>1</b></button>
         </nav>
         <div className="profile-card">
-          <div className="profile-row"><span className="avatar">JM</span><span><strong>JM Reparos</strong><small>Perfil de demonstração</small></span></div>
-          <div className="profile-progress"><span /></div>
-          <div className="profile-meta"><span>Perfil completo</span><strong>78%</strong></div>
-          <button type="button" onClick={() => setProfileOpen(true)}>Completar perfil</button>
+          <div className="profile-row"><span className="avatar">{profileInitials}</span><span><strong>{supplierProfile.companyName}</strong><small>{supplierProfile.mainActivity}</small></span></div>
+          <div className="profile-progress"><span style={{ transform: `scaleX(${profileCompletion / 100})` }} /></div>
+          <div className="profile-meta"><span>{supplierProfile.source === "onboarding" ? "Perfil salvo" : "Perfil de demonstração"}</span><strong>{profileCompletion}%</strong></div>
+          <button type="button" onClick={() => setProfileOpen(true)}>Ver perfil</button>
         </div>
       </aside>
 
       <section className="workspace" id="top">
         <header className="topbar">
-          <div><span className="eyebrow">Itapoá · Santa Catarina</span><h1>Boas oportunidades encontraram você.</h1></div>
+          <div><span className="eyebrow">{supplierProfile.targetMunicipality} · {supplierProfile.targetState}</span><h1>Oportunidades para {supplierProfile.companyName}.</h1></div>
           <div className="top-actions"><span className="snapshot"><i /> Snapshot público · 19 ago</span><button className="icon-button" type="button" aria-label="Abrir notificações">●</button></div>
         </header>
 
         <section className="summary-strip" aria-label="Resumo da inbox">
-          <div><strong>12</strong><span>oportunidades no snapshot</span></div>
-          <div><strong>5</strong><span>com alerta de qualidade</span></div>
-          <div><strong>30</strong><span>fotos ou anexos encontrados</span></div>
-          <p><span aria-hidden="true">✦</span> A análise considera serviços, localização, capacidade e riscos antes de recomendar.</p>
+          <div><strong>{rankedOpportunities.length}</strong><span>oportunidades analisadas</span></div>
+          <div><strong>{highMatchCount}</strong><span>boas opções para o perfil</span></div>
+          <div><strong>{rankedOpportunities.filter((item) => item.alerts?.length).length}</strong><span>com ponto para revisar</span></div>
+          <p><span aria-hidden="true">✓</span>{highMatchCount ? "Ordem calculada por atividade, região, enquadramento e riscos do edital." : "Nenhuma alta aderência agora; mantivemos as opções próximas para comparação."}</p>
         </section>
 
-        <div className="content-grid" id="oportunidades">
+        <div className={`content-grid view-${viewMode}`} id="oportunidades">
           <section className="inbox" aria-labelledby="inbox-heading">
             <div className="section-heading">
-              <div><span className="eyebrow">Sua inbox</span><h2 id="inbox-heading">{onlyHighMatch ? "Alta compatibilidade" : "Todas as oportunidades"}</h2></div>
-              <button className={`filter-button ${onlyHighMatch ? "filter-active" : ""}`} type="button" onClick={() => setOnlyHighMatch((value) => !value)}>
-                {onlyHighMatch ? "Mostrar todas" : "Só alta compatibilidade"} <span>{onlyHighMatch ? "12" : "5"}</span>
-              </button>
+              <div><span className="eyebrow">Oportunidades</span><h2 id="inbox-heading">{highFilterActive ? "Melhores para o seu perfil" : "Ordenadas por aderência"}</h2></div>
+              <div className="inbox-controls">
+                <div className="view-switcher" aria-label="Visualização das oportunidades">
+                  <button type="button" aria-pressed={viewMode === "summary"} onClick={() => setViewMode("summary")}>Sumário</button>
+                  <button type="button" aria-pressed={viewMode === "map"} onClick={() => setViewMode("map")}>Mapa</button>
+                </div>
+                <button className={`filter-button ${highFilterActive ? "filter-active" : ""}`} type="button" disabled={!highMatchCount} onClick={() => setOnlyHighMatch((value) => !value)}>
+                  {!highMatchCount ? "Sem alta aderência" : highFilterActive ? "Mostrar todas" : "Mostrar melhores"} <span>{highFilterActive ? rankedOpportunities.length : highMatchCount}</span>
+                </button>
+              </div>
             </div>
 
-            <div className="opportunity-list">
+            {viewMode === "map" ? (
+              <OpportunityMap opportunities={visibleOpportunities.map((item) => ({ ...item, match: item.matchResult.score }))} selectedId={selected.id} companyName={supplierProfile.companyName} companyInitials={profileInitials} onSelect={chooseOpportunity} />
+            ) : <div className="opportunity-list">
               {visibleOpportunities.map((opportunity) => (
                 <div
                   className={`opportunity-card ${selected.id === opportunity.id ? "selected" : ""}`}
@@ -296,24 +346,25 @@ export function ItapoaExperience() {
                   role="button"
                   tabIndex={0}
                 >
-                  <div className="card-topline"><span className="activity">{opportunity.activity}</span><span className={`match ${opportunity.match >= 85 ? "strong" : opportunity.match >= 70 ? "medium" : "low"}`}>{opportunity.match}% compatível</span></div>
+                  <div className="card-topline"><span className="activity">{opportunity.activity}</span><span className={`match ${opportunity.matchResult.score >= 88 ? "strong" : opportunity.matchResult.score >= 58 ? "medium" : "low"}`}>{opportunity.matchResult.label} · {opportunity.matchResult.score}%</span></div>
                   <h3>{opportunity.service}</h3>
                   <p>{opportunity.summary}</p>
-                  <div className="tags">{opportunity.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                  <div className="card-context"><span>{opportunity.location}</span><span>Até {formatDeadline(opportunity.proposalDeadline)}</span></div>
+                  <div className="tags">{opportunity.tags.slice(0, 2).map((tag) => <span key={tag}>{tag}</span>)}</div>
                   {opportunity.alerts?.length ? <div className="card-alert"><b>!</b> {opportunity.alerts[0]}</div> : null}
-                  <div className="card-footer"><span>Prazo: {formatDeadline(opportunity.proposalDeadline)} · #{opportunity.id}</span><span className="card-link">Ver oportunidade <b>→</b></span></div>
+                  <div className="card-footer"><span>#{opportunity.id} · {opportunity.agency}</span><span className="card-link">Abrir <b>→</b></span></div>
                 </div>
               ))}
-            </div>
+            </div>}
           </section>
 
           <aside className={`detail-panel mode-${panelMode}`} aria-label="Painel da oportunidade selecionada">
             {panelMode === "detail" ? (
               <>
-                <div className="detail-kicker"><span>Oportunidade selecionada</span><b>{selected.match}%</b></div>
+                <div className="detail-kicker"><span>Oportunidade selecionada</span><b>{selected.matchResult.label} · {selected.matchResult.score}%</b></div>
                 <h2>{selected.service}</h2>
                 <p className="detail-lead">{selected.description}</p>
-                <div className="insight-box"><span aria-hidden="true">✦</span><div><strong>Por que combina</strong><p>Você atende Itapoá e informou experiência compatível. A IA ainda vai confirmar os detalhes que faltam.</p></div></div>
+                <div className="insight-box"><span aria-hidden="true">✓</span><div><strong>Por que está nesta posição</strong>{selected.matchResult.reasons.map((reason) => <p key={reason}>{reason}</p>)}{selected.matchResult.gaps.map((gap) => <p className="match-gap" key={gap}>A revisar: {gap}</p>)}</div></div>
                 {selected.alerts?.map((alert) => <div className="quality-alert" key={alert}><b>Alerta</b><span>{alert}</span></div>)}
                 <dl className="facts">
                   <div><dt>Local</dt><dd>{selected.location}</dd></div><div><dt>Pagamento</dt><dd>{selected.payment}</dd></div>
@@ -329,15 +380,17 @@ export function ItapoaExperience() {
             {panelMode === "conversation" ? (
               <section className="conversation-panel" aria-live="polite">
                 <button className="back-button" type="button" onClick={() => setPanelMode("detail")}>← Voltar ao detalhe</button>
-                <span className="conversation-status"><i /> Conversa guiada</span>
-                <h2>Vamos deixar sua proposta pronta.</h2>
+                <div className="conversation-heading"><span className="conversation-status"><i /> Conversa guiada</span><span>{Math.min(conversationStep + 1, 2)} de 2</span></div>
+                <h2>Vamos confirmar se esta oportunidade cabe na sua rotina.</h2>
+                <div className="conversation-context"><span>{selected.matchResult.score}% de aderência</span><div><small>Oportunidade #{selected.id}</small><strong>{selected.service}</strong></div></div>
+                <div className="conversation-progress" aria-label={`${conversationStep} de 2 respostas confirmadas`}><span className={conversationStep >= 1 ? "complete" : "active"} /><span className={conversationStep >= 2 ? "complete" : conversationStep === 1 ? "active" : ""} /></div>
                 <div className="chat-thread">
-                  <div className="assistant-message"><b>Primeiro Contrato</b><p>Li a oportunidade #{selected.id}. Já validei seu perfil e preciso confirmar só duas informações.</p></div>
-                  <div className="assistant-message"><b>1 de 2</b><p>Você consegue fazer a vistoria e as medições antes de enviar o orçamento?</p></div>
-                  {conversationStep === 0 ? <div className="answer-options"><button type="button" onClick={() => setConversationStep(1)}>Sim, consigo</button><button type="button" onClick={() => setConversationStep(1)}>Preciso agendar</button></div> : <div className="user-message">Sim, consigo fazer a vistoria.</div>}
-                  {conversationStep >= 1 ? <div className="assistant-message"><b>2 de 2</b><p>Seu preço pode incluir materiais, transporte e limpeza final?</p></div> : null}
-                  {conversationStep === 1 ? <div className="answer-options"><button type="button" onClick={() => setConversationStep(2)}>Sim, incluo tudo</button><button type="button" onClick={() => setConversationStep(2)}>Quero calcular primeiro</button></div> : null}
-                  {conversationStep >= 2 ? <><div className="user-message">Sim, vou incluir todos os custos.</div><div className="assistant-message ready-message"><b>Pronto para avançar</b><p>Seu perfil atende aos requisitos principais. Preparei um resumo para o formulário do Contrata+Brasil.</p></div></> : null}
+                  <div className="assistant-message"><b>Agente Primeiro Contrato</b><p>Comparei o edital com o perfil de {supplierProfile.companyName}. Preciso confirmar dois pontos práticos antes de preparar o rascunho.</p></div>
+                  <div className="assistant-message"><b>Disponibilidade</b><p>Você consegue fazer a vistoria e as medições antes de enviar o orçamento?</p></div>
+                  {conversationStep === 0 ? <div className="answer-options"><button type="button" onClick={() => { setConversationAnswers({ visit: "Consigo fazer a vistoria" }); setConversationStep(1); }}>Sim, consigo</button><button type="button" onClick={() => { setConversationAnswers({ visit: "Preciso combinar a data" }); setConversationStep(1); }}>Preciso agendar</button></div> : <div className="user-message">{conversationAnswers.visit}</div>}
+                  {conversationStep >= 1 ? <div className="assistant-message message-enter"><b>Composição do preço</b><p>Seu orçamento pode incluir materiais, transporte e limpeza final?</p></div> : null}
+                  {conversationStep === 1 ? <div className="answer-options message-enter"><button type="button" onClick={() => { setConversationAnswers((current) => ({ ...current, materials: "Vou incluir todos os custos" })); setConversationStep(2); }}>Sim, incluo tudo</button><button type="button" onClick={() => { setConversationAnswers((current) => ({ ...current, materials: "Preciso calcular os materiais" })); setConversationStep(2); }}>Quero calcular primeiro</button></div> : null}
+                  {conversationStep >= 2 ? <><div className="user-message message-enter">{conversationAnswers.materials}</div><div className="assistant-message ready-message message-enter"><b>Confirmações registradas</b><p>O perfil continua compatível. Organizei estas respostas no rascunho, que ainda ficará disponível para sua revisão.</p><dl><div><dt>Vistoria</dt><dd>{conversationAnswers.visit}</dd></div><div><dt>Custos</dt><dd>{conversationAnswers.materials}</dd></div></dl><button type="button" onClick={() => { setConversationStep(0); setConversationAnswers({}); }}>Alterar respostas</button></div></> : null}
                 </div>
                 {conversationStep >= 2 ? <button className="primary-action" type="button" onClick={() => setPanelMode("application")}>Preparar aplicação <span>→</span></button> : null}
               </section>
@@ -348,15 +401,15 @@ export function ItapoaExperience() {
                 <button className="back-button" type="button" onClick={() => setPanelMode("detail")}>← Voltar ao detalhe</button>
                 <span className="conversation-status"><i /> Rascunho da aplicação</span>
                 <h2>{draftReady ? "Tudo pronto para sua revisão." : "Pré-preenchimento preparado."}</h2>
-                <p className="detail-lead">A IA organizou os dados que serão levados ao portal. Nenhuma proposta será enviada sem sua confirmação.</p>
+                <p className="detail-lead">Os dados confirmados foram organizados para sua revisão. Nenhuma proposta será enviada por esta demonstração.</p>
                 <div className="application-sheet">
-                  <div>Empresa<span>JM Reparos · MEI</span></div>
+                  <div>Empresa<span>{supplierProfile.companyName} · {supplierProfile.isMei === true ? "MEI" : "Enquadramento a confirmar"}</span></div>
                   <div>Oportunidade<span>#{selected.id} · {selected.service}</span></div>
                   <div>Local de execução<span>{selected.location}</span></div>
                   <div>Escopo proposto<span>Mão de obra, materiais, transporte e limpeza final</span></div>
                   <div>Prazo assumido<span>{selected.executionDeadline}</span></div>
                 </div>
-                <div className="automation-note"><span>↗</span><div><b>Próxima etapa: computer use</b><p>A IA abre o portal, preenche o formulário e para antes do envio.</p></div></div>
+                <div className="automation-note"><span>▤</span><div><b>Edital pré-preenchido</b><p>Empresa, oportunidade, escopo e prazos reunidos em um único rascunho revisável.</p></div></div>
                 <button className="primary-action" type="button" onClick={() => setDraftReady(true)}>{draftReady ? "Rascunho revisado ✓" : "Revisar dados da aplicação"}</button>
               </section>
             ) : null}
@@ -368,11 +421,10 @@ export function ItapoaExperience() {
         <div className="modal-backdrop">
           <section className="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
             <button className="modal-close" type="button" aria-label="Fechar perfil" onClick={() => setProfileOpen(false)}>×</button>
-            <span className="eyebrow">Perfil da empresa</span><h2 id="profile-title">JM Reparos</h2><p>Essas informações ajudam a IA a recomendar só o que sua empresa consegue executar.</p>
-            <div className="profile-fields"><div>Cidade de atendimento<span>Itapoá e região · raio de 40 km</span></div><div>Enquadramento<span>MEI · situação ativa</span></div><div>Serviços principais<span>Manutenção predial, elétrica e pequenos reparos</span></div><div>Capacidade<span>Equipe de 2 pessoas · veículo próprio</span></div></div>
-            <div className="document-row"><span>✓</span><div><b>Cartão CNPJ</b><small>Dados extraídos e verificados</small></div></div>
-            <div className="document-row pending"><span>+</span><div><b>Adicionar certificados</b><small>NR-10, NR-35 ou comprovantes técnicos</small></div></div>
-            <button className="primary-action" type="button" onClick={() => setProfileOpen(false)}>Salvar perfil</button>
+            <span className="eyebrow">Perfil da empresa</span><h2 id="profile-title">{supplierProfile.companyName}</h2><p>Dados usados para ordenar as oportunidades desta sessão.</p>
+            <div className="profile-fields"><div>Razão social<span>{supplierProfile.legalName}</span></div><div>CNPJ<span>{supplierProfile.cnpj}</span></div><div>Região prioritária<span>{supplierProfile.targetMunicipality}/{supplierProfile.targetState} · raio de {supplierProfile.operatingRadiusKm} km</span></div><div>Enquadramento<span>{supplierProfile.isMei === true ? "MEI" : "A confirmar"}{supplierProfile.isSimple === true ? " · Simples Nacional" : ""}</span></div><div>Atividade principal<span>{supplierProfile.mainActivity}</span></div><div>Limite por contrato<span>{formatCurrency(supplierProfile.contractLimit)}</span></div><div>Capacidades reconhecidas<span>{supplierProfile.capabilities.length ? supplierProfile.capabilities.join(", ") : "Nenhuma capacidade específica confirmada"}</span></div></div>
+            <div className="document-row"><span>✓</span><div><b>{supplierProfile.source === "onboarding" ? "Perfil salvo neste navegador" : "Perfil da demonstração"}</b><small>O ranking é recalculado quando estes dados mudam</small></div></div>
+            <button className="primary-action" type="button" onClick={() => setProfileOpen(false)}>Fechar perfil</button>
           </section>
         </div>
       ) : null}
