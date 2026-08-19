@@ -26,8 +26,8 @@ test("a raiz pública oferece exatamente os dois usuários pedidos", async () =>
 
   assert.match(html, /<title>Primeiro Contrato — escolha seu usuário<\/title>/i);
   assert.match(html, /Quem está entrando\?/);
-  assert.match(html, /Emprenteiro em Itapoá - SC/);
-  assert.match(html, /Novo usuário/);
+  assert.match(html, /Empreiteiro em Itapoá — SC/);
+  assert.match(html, /Cadastrar uma empresa/);
   assert.match(html, /href="\/itapoa"/);
   assert.match(html, /href="\/novo-usuario"/);
   assert.match(html, /og-user-choice\.png/);
@@ -41,6 +41,8 @@ test("o usuário de Itapoá recebe atualização ao vivo e matching por IA", asy
   assert.match(html, /Atualizar oportunidades/);
   assert.match(html, /A IA extrai os requisitos de cada edital/);
   assert.match(html, /Todas as oportunidades/);
+  assert.match(html, /Sumário/);
+  assert.match(html, /Mapa/);
   assert.match(html, /Instalação de Calhas e Rufos/);
   assert.match(html, /JM Reparos Prediais/);
   assert.doesNotMatch(html, /og-user-choice\.png|og\.png/);
@@ -107,13 +109,14 @@ test("o código usa Responses API estruturada e não contém mapa manual por ID"
   assert.equal(JSON.parse(hosting).d1, "DB");
 });
 
-test("novo usuário permanece numa rota separada e honesta", async () => {
+test("novo usuário abre o onboarding assistido sem dados inventados", async () => {
   const html = await renderedHtml("/novo-usuario");
 
   assert.match(html, /<title>Novo usuário \| Primeiro Contrato<\/title>/i);
-  assert.match(html, /A próxima experiência começa aqui\./);
-  assert.match(html, /Experiência aguardando definição/);
-  assert.match(html, /Nenhum perfil foi criado ainda\./);
+  assert.match(html, /Agente Primeiro Contrato/);
+  assert.match(html, /Envie o CNPJ/);
+  assert.match(html, /Digite o CNPJ e, se quiser, o site da empresa/);
+  assert.doesNotMatch(html, /Cadastro localizado|Fontes encontradas/);
   assert.doesNotMatch(html, /og-user-choice\.png|og\.png/);
 });
 

@@ -23,8 +23,8 @@ export default function UserChoicePage() {
             <span className="identity-avatar" aria-hidden="true">JM</span>
             <span className="identity-option-copy">
               <small>Perfil pronto para a demonstração</small>
-              <strong>Emprenteiro em Itapoá - SC</strong>
-              <span>Entrar na experiência atual com 12 oportunidades locais.</span>
+              <strong>Empreiteiro em Itapoá — SC</strong>
+              <span>Acessar um perfil pronto com oportunidades locais ordenadas.</span>
             </span>
             <span className="identity-arrow" aria-hidden="true">→</span>
           </Link>
@@ -32,9 +32,9 @@ export default function UserChoicePage() {
           <Link className="identity-option" href="/novo-usuario">
             <span className="identity-avatar identity-avatar-new" aria-hidden="true">+</span>
             <span className="identity-option-copy">
-              <small>Começar do início</small>
-              <strong>Novo usuário</strong>
-              <span>Acessar a próxima experiência que ainda será desenhada.</span>
+              <small>Onboarding assistido</small>
+              <strong>Cadastrar uma empresa</strong>
+              <span>Informar o CNPJ, revisar os dados encontrados e montar o perfil.</span>
             </span>
             <span className="identity-arrow" aria-hidden="true">→</span>
           </Link>

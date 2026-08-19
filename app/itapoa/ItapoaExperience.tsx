@@ -18,6 +18,7 @@ import {
   levelLabels,
   skillCatalog,
 } from "./profile";
+import { OpportunityMap } from "./OpportunityMap";
 
 type Props = {
   snapshot: OpportunitySnapshot;
@@ -77,6 +78,7 @@ export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, in
   const [matchResponse, setMatchResponse] = useState(initialMatches);
   const [selectedId, setSelectedId] = useState(initialMatches.matches[0]?.opportunityId ?? snapshot.opportunities[0].opportunityId);
   const [onlyRecommended, setOnlyRecommended] = useState(false);
+  const [viewMode, setViewMode] = useState<"summary" | "map">("summary");
   const [panelMode, setPanelMode] = useState<"detail" | "conversation" | "application">("detail");
   const [conversationStep, setConversationStep] = useState(0);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -127,6 +129,7 @@ export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, in
   const attachmentCount = snapshot.opportunities.reduce((sum, opportunity) => sum + opportunity.attachments.length, 0);
   const canAdvance = selectedMatch.band === "recommended" && !selectedMatch.blocked;
   const profileCompletion = profile.skills.length >= 3 && profile.capabilities.length >= 4 ? 100 : 80;
+  const profileInitials = profile.displayName.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "PC";
 
   const chooseOpportunity = (id: string) => {
     setSelectedId(id);
@@ -268,16 +271,36 @@ export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, in
           <button type="button" onClick={openProfile}>Editar perfil</button>
         </div>
 
-        <div className="content-grid" id="oportunidades">
+        <div className={`content-grid view-${viewMode}`} id="oportunidades">
           <section className="inbox" aria-labelledby="inbox-heading">
             <div className="section-heading">
               <div><span className="eyebrow">Ranking calculado</span><h2 id="inbox-heading">{onlyRecommended ? "Recomendadas agora" : "Todas as oportunidades"}</h2></div>
-              <button className={`filter-button ${onlyRecommended ? "filter-active" : ""}`} type="button" onClick={() => setOnlyRecommended((value) => !value)}>
-                {onlyRecommended ? "Mostrar todas" : "Só recomendadas"} <span>{onlyRecommended ? snapshot.opportunities.length : recommendedCount}</span>
-              </button>
+              <div className="inbox-controls">
+                <div className="view-switcher" aria-label="Visualização das oportunidades">
+                  <button type="button" aria-pressed={viewMode === "summary"} onClick={() => setViewMode("summary")}>Sumário</button>
+                  <button type="button" aria-pressed={viewMode === "map"} onClick={() => setViewMode("map")}>Mapa</button>
+                </div>
+                <button className={`filter-button ${onlyRecommended ? "filter-active" : ""}`} type="button" onClick={() => setOnlyRecommended((value) => !value)}>
+                  {onlyRecommended ? "Mostrar todas" : "Só recomendadas"} <span>{onlyRecommended ? snapshot.opportunities.length : recommendedCount}</span>
+                </button>
+              </div>
             </div>
 
-            <div className="opportunity-list">
+            {viewMode === "map" ? (
+              <OpportunityMap
+                opportunities={visibleOpportunities.map((opportunity) => ({
+                  id: opportunity.opportunityId,
+                  service: opportunity.serviceName,
+                  activity: opportunity.activity,
+                  location: locationLabel(opportunity),
+                  match: matchById.get(opportunity.opportunityId)?.score ?? 0,
+                }))}
+                selectedId={selected.opportunityId}
+                companyName={profile.displayName}
+                companyInitials={profileInitials}
+                onSelect={chooseOpportunity}
+              />
+            ) : <div className="opportunity-list">
               {visibleOpportunities.map((opportunity) => {
                 const match = matchById.get(opportunity.opportunityId) as MatchResult;
                 const alert = opportunity.qualityFlags.find((flag) => flag.severity === "critical");
@@ -308,7 +331,7 @@ export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, in
                   </div>
                 );
               })}
-            </div>
+            </div>}
           </section>
 
           <aside className={`detail-panel mode-${panelMode}`} aria-label="Painel da oportunidade selecionada">
