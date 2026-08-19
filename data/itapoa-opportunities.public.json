@@ -1,0 +1,1407 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshot": {
+    "source": "Contrata+Brasil",
+    "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/?uf=SC&municipio=Itapo%C3%A1&status_oportunidade=abertas",
+    "query": {
+      "uf": "SC",
+      "municipio": "Itapoá",
+      "status_oportunidade": "abertas"
+    },
+    "cityIbge": "4208450",
+    "citySemantics": "execution_location",
+    "captureStartedAt": "2026-08-19T13:20:40.055-03:00",
+    "captureCompletedAt": "2026-08-19T13:21:14.352-03:00",
+    "capturedAt": "2026-08-19T13:21:14.352-03:00",
+    "coverage": {
+      "declaredOpportunityCount": 12,
+      "declaredPageCount": 1,
+      "pagesTraversed": [
+        1
+      ],
+      "cardsExtracted": 12,
+      "uniqueIds": 12,
+      "detailsProcessed": 12,
+      "detailFailures": 0,
+      "duplicateIds": [],
+      "declaredMissingCount": 0
+    },
+    "binaryQa": {
+      "completedAt": "2026-08-19T16:21:45.886Z",
+      "candidates": 30,
+      "downloaded": 30,
+      "failed": 0,
+      "accountingValid": true
+    },
+    "signedUrlPolicy": "URLs assinadas temporárias foram preservadas somente no snapshot interno; esta cópia publicável usa exclusivamente arquivos locais validados."
+  },
+  "opportunities": [
+    {
+      "opportunityId": "12500",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12500",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:20:45.199-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-22T08:09:59.449474-03:00",
+      "proposalClosesAtRaw": "2026-08-22T08:09:59.449474-03:00",
+      "expiryLabel": "Expira em 22/08/2026",
+      "serviceName": "Instalação de painéis publicitários",
+      "activity": "INSTALADOR(A) DE PAINÉIS PUBLICITÁRIOS",
+      "specification": "Realiza a instalação de painéis publicitários, incluindo anúncios, outdoors, placas e painéis de identificação.",
+      "summaryFromListing": "CMB 21- Contratação de empresa especializada para confecção e instalação perfurite nas portas e janelas para CRAS , incluindo fornecimento de todos os materiais, fabricação, transporte e instalação completa .Solicitamos, em caráter de urgência, a instalaç [...]",
+      "description": "CMB 21- Contratação de empresa especializada para confecção e instalação perfurite nas portas e janelas para CRAS , incluindo fornecimento de todos os materiais, fabricação, transporte e instalação completa .Solicitamos, em caráter de urgência, a instalação de perfurite nas janelas e portas de acesso do prédio, com o objetivo de reforçar a segurança do local, proporcionando maior proteção ao patrimônio público, aos equipamentos e materiais existentes no espaço.\n\nA arte/layout oficial será fornecida pela Administração ao fornecedor vencedor após a contratação,\nPrioridade: Urgente – Segurança Patrimonial.\nContato : 51 8355-4229 Bruno",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "CRAS SAMAMBAIAL",
+        "street": "Rua 655 Joaquim Peres",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Samambaial",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "AO LADO DO POSTO DE SAUDE"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "15 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-17",
+      "executionDeadlineRaw": "17 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [
+        {
+          "index": 1,
+          "kind": "image",
+          "label": "Anexo 1",
+          "sourceFilename": "2c5920d6-38af-4ae8-8cc2-53da655e04aa.png",
+          "filenameHint": "12500-01.png",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12500/image-12500-01-png-3c83e8922c8bc431.png",
+          "sha256": "eccf881091675c17d81eea58d98a19e859607583861d17a4ed4f173b7d6e37bc",
+          "mime": "image/png",
+          "bytes": 1088022,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:45.199-03:00",
+          "candidateId": "3c83e8922c8bc431",
+          "dimensions": {
+            "width": 1414,
+            "height": 2000
+          },
+          "validatedAt": "2026-08-19T16:21:45.841Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 2,
+          "kind": "image",
+          "label": "Anexo 2",
+          "sourceFilename": "810f3de4-0485-4fc1-a229-4267034a8f55.png",
+          "filenameHint": "12500-02.png",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12500/image-12500-02-png-47573fe62bbb48c2.png",
+          "sha256": "a9739d9b3f081825ec235b57f1ca971a751907c92eba1dbc3f6b668ef6679bed",
+          "mime": "image/png",
+          "bytes": 1083246,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:45.199-03:00",
+          "candidateId": "47573fe62bbb48c2",
+          "dimensions": {
+            "width": 1414,
+            "height": 2000
+          },
+          "validatedAt": "2026-08-19T16:21:45.838Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 3,
+          "kind": "image",
+          "label": "Anexo 3",
+          "sourceFilename": "8f2ce77c-d374-4301-97c3-2c16b98d2caf.png",
+          "filenameHint": "12500-03.png",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12500/image-12500-03-png-a1004ee88ba46e23.png",
+          "sha256": "9cfd81ea96571178ad34786b78384858b26aa12c87fa23a0674b3f55871000ec",
+          "mime": "image/png",
+          "bytes": 729477,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:45.199-03:00",
+          "candidateId": "a1004ee88ba46e23",
+          "dimensions": {
+            "width": 1414,
+            "height": 2000
+          },
+          "validatedAt": "2026-08-19T16:21:45.843Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 4,
+          "kind": "image",
+          "label": "Anexo 4",
+          "sourceFilename": "5d4a1360-92e7-4e92-a381-c904d52aebec.png",
+          "filenameHint": "12500-04.png",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12500/image-12500-04-png-43ac63dc0982a180.png",
+          "sha256": "75ffd60712dd46eaab53cb86f46395f5ae88f1a85d0a888efc34d7323502afd2",
+          "mime": "image/png",
+          "bytes": 898125,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:45.199-03:00",
+          "candidateId": "43ac63dc0982a180",
+          "dimensions": {
+            "width": 1414,
+            "height": 2000
+          },
+          "validatedAt": "2026-08-19T16:21:45.833Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 5,
+          "kind": "image",
+          "label": "Anexo 5",
+          "sourceFilename": "aeccf50f-e10f-498f-8d4c-3addf7fcef7e.png",
+          "filenameHint": "12500-05.png",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12500/image-12500-05-png-6eb3091a172b69b6.png",
+          "sha256": "3cce821aaa835c29c0e67ef644d864b321ba5eacd9bc28bfc26c9af0deb3a400",
+          "mime": "image/png",
+          "bytes": 853416,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:45.199-03:00",
+          "candidateId": "6eb3091a172b69b6",
+          "dimensions": {
+            "width": 1414,
+            "height": 2000
+          },
+          "validatedAt": "2026-08-19T16:21:45.836Z",
+          "downloadQualityFlags": []
+        }
+      ],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "execution_before_proposal_close",
+          "kind": "verified",
+          "severity": "critical",
+          "evidence": "Execução publicada para 2026-08-17, antes do fechamento das propostas em 2026-08-22T08:09:59.449474-03:00."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12500.html"
+      }
+    },
+    {
+      "opportunityId": "12644",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12644",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:20:47.757-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-24T08:09:49.339645-03:00",
+      "proposalClosesAtRaw": "2026-08-24T08:09:49.339645-03:00",
+      "expiryLabel": "Expira em 24/08/2026",
+      "serviceName": "Construção de Estruturas",
+      "activity": "Pedreiro",
+      "specification": "Edificação de pilares, vigas, lajes, fundações e estruturas de suporte.",
+      "summaryFromListing": "Contratação de empresa especializada para execução de pilares de concreto confeccionados com manilhas de concreto, destinados ao apoio de 02 (dois) containers utilizados como depósito. Os pilares deverão possuir altura suficiente para elevar os containers [...]",
+      "description": "Contratação de empresa especializada para execução de pilares de concreto confeccionados com manilhas de concreto, destinados ao apoio de 02 (dois) containers utilizados como depósito. Os pilares deverão possuir altura suficiente para elevar os containers, de modo a minimizar riscos de alagamentos e garantir sua estabilidade. Aproximadamente com 1,5 m de profundidade e 84cm acima do solo, ou conforme nível verificado no local, usar como referência a altura do deck já existente no local. Considerar que existem manilhas abaixo do solo, previamente demarcadas.\nOs containers possuem as seguintes dimensões:\n• 01 (um) container de 40 pés, medindo aproximadamente 12,00 m × 2,44 m;\n• 01 (um) container medindo 3 m × 2 m.\nO orçamento deverá contemplar:\n• Fornecimento de todos os materiais necessários à execução dos serviços;\n• Mão de obra especializada;\n• Equipamentos e ferramentas necessários;\n• Transporte, carga e descarga dos materiais;\n• Limpeza da área após a execução dos serviços;\n• Descarte ambientalmente adequado de todos os resíduos gerados, em conformidade com a legislação vigente.\n• Medidas a serem conferidas: entre cerca o container ficará 2m de distância lateral, na frontal 4 metros considerando a abertura da porta, e entre um container e outro 1 metro considerando que um deles possui janela. IMAGENS MERAMENTE ILUSTRATIVAS.\nVisita técnica:\nSOMENTE SERÃO ACEITOS ORÇAMENTOS APRESENTADOS POR EMPRESAS QUE TENHAM REALIZADO A VISITA TÉCNICA.\nAgendamento pelo telefone: (47) 3443-8848 ou (47) 98869-1240 falar com Janaína das 8hrs as 14:00hrs\nou pelo email: assessoria.gestaoambiental@itapoa.sc.gov.br",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Parque Municipal do Carijós",
+        "street": "Rua 750 do Peixe",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Rua da Polícia Civil"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "20 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-20",
+      "executionDeadlineRaw": "20 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [
+        {
+          "index": 1,
+          "kind": "image",
+          "label": "Anexo 1",
+          "sourceFilename": "79c41973-d350-4155-a693-606ec5ba31db.jpeg",
+          "filenameHint": "12644-01.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12644/image-12644-01-jpeg-7131677b18b6323d.jpg",
+          "sha256": "262c3a6dc6a37101ff87b86484ccaa2e4d11981808edb18c870df60b5e3678c5",
+          "mime": "image/jpeg",
+          "bytes": 80583,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:47.757-03:00",
+          "candidateId": "7131677b18b6323d",
+          "dimensions": {
+            "width": 1600,
+            "height": 1139
+          },
+          "validatedAt": "2026-08-19T16:21:45.844Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 2,
+          "kind": "image",
+          "label": "Anexo 2",
+          "sourceFilename": "bcd116ef-ca09-4d37-8caf-bd7b0f6e7b80.jpeg",
+          "filenameHint": "12644-02.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12644/image-12644-02-jpeg-e694cc13f1abfa29.jpg",
+          "sha256": "dd2f06367f2cd4166c8d4f1c02e584c24113294cf0edbe7239d118d0d4532532",
+          "mime": "image/jpeg",
+          "bytes": 682107,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:47.757-03:00",
+          "candidateId": "e694cc13f1abfa29",
+          "dimensions": {
+            "width": 1243,
+            "height": 928
+          },
+          "validatedAt": "2026-08-19T16:21:45.855Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 3,
+          "kind": "image",
+          "label": "Anexo 3",
+          "sourceFilename": "09b64bc6-f195-49b8-ba80-0bdcb8a95afb.jpeg",
+          "filenameHint": "12644-03.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12644/image-12644-03-jpeg-d7da27f495a1551d.jpg",
+          "sha256": "f981c6b6b1b251423cd440fae635529547012fea91f8ebad251f1a3574d4b30b",
+          "mime": "image/jpeg",
+          "bytes": 259016,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:47.757-03:00",
+          "candidateId": "d7da27f495a1551d",
+          "dimensions": {
+            "width": 1200,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.851Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 4,
+          "kind": "image",
+          "label": "Anexo 4",
+          "sourceFilename": "86521b0c-f52c-4151-bae7-ba001bc3a7a6.jpeg",
+          "filenameHint": "12644-04.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12644/image-12644-04-jpeg-d4d25c4d27a2e496.jpg",
+          "sha256": "b67b25e71f850b68a6639d37d9b9c4deba875a2e17a848539a76ffc59692d4b8",
+          "mime": "image/jpeg",
+          "bytes": 227562,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:47.757-03:00",
+          "candidateId": "d4d25c4d27a2e496",
+          "dimensions": {
+            "width": 1200,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.850Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 5,
+          "kind": "image",
+          "label": "Anexo 5",
+          "sourceFilename": "569acd0d-bc87-4b2f-ace7-7bfdbe8e6560.jpeg",
+          "filenameHint": "12644-05.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12644/image-12644-05-jpeg-ba7b105f27c5d169.jpg",
+          "sha256": "a750bf67abef84277b10a00f5d98dc516ae7d1b116242e0a8ce94bb1e099d60a",
+          "mime": "image/jpeg",
+          "bytes": 217672,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:47.757-03:00",
+          "candidateId": "ba7b105f27c5d169",
+          "dimensions": {
+            "width": 1600,
+            "height": 1200
+          },
+          "validatedAt": "2026-08-19T16:21:45.847Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 6,
+          "kind": "image",
+          "label": "Anexo 6",
+          "sourceFilename": "13aab2c8-b007-47db-9c33-8086e3c7fc2d.jpeg",
+          "filenameHint": "12644-06.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12644/image-12644-06-jpeg-28c22c9f0d2c6cd9.jpg",
+          "sha256": "08ba050c27547b9e0a6880e2833c6286533563555fa878ba4f03886b6936cd68",
+          "mime": "image/jpeg",
+          "bytes": 199498,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:47.757-03:00",
+          "candidateId": "28c22c9f0d2c6cd9",
+          "dimensions": {
+            "width": 1600,
+            "height": 1200
+          },
+          "validatedAt": "2026-08-19T16:21:45.846Z",
+          "downloadQualityFlags": []
+        }
+      ],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "execution_before_proposal_close",
+          "kind": "verified",
+          "severity": "critical",
+          "evidence": "Execução publicada para 2026-08-20, antes do fechamento das propostas em 2026-08-24T08:09:49.339645-03:00."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12644.html"
+      }
+    },
+    {
+      "opportunityId": "12648",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12648",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:20:49.657-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-24T08:09:31.514099-03:00",
+      "proposalClosesAtRaw": "2026-08-24T08:09:31.514099-03:00",
+      "expiryLabel": "Expira em 24/08/2026",
+      "serviceName": "Instalação de Equipamentos Sanitários",
+      "activity": "Bombeiro Hidráulico - Encanador",
+      "specification": "Conexão desses equipamentos às redes de água e esgoto.",
+      "summaryFromListing": "OBJETO: Disponibilização e instalação de sistema de tratamento de esgoto individual para atender ao Posto Guarda Vidas n.° 12, situado na Avenida 741 Beira Mar III, próximo ao restaurante Pérola, Coordenadas UTM Fuso 22S (X) 739698 m E (Y) 7113582 m S. O [...]",
+      "description": "OBJETO: Disponibilização e instalação de sistema de tratamento de esgoto individual para atender ao Posto Guarda Vidas n.° 12, situado na Avenida 741 Beira Mar III, próximo ao restaurante Pérola, Coordenadas UTM Fuso 22S (X) 739698 m E (Y) 7113582 m S. O sistema deverá possuir capacidade mínima para 100 L/d e ser constituído por caixa de areia, tanque séptico, filtro anaeróbio e sumidouro de fluxo ascendente ou vala de infiltração.\nOs reatores deverão ser estanques, fabricados em PEAD (polietileno de alta densidade) ou PRFV (plástico reforçado em fibra de vidro). Poderão ser em monobloco com divisória ou reatores distintos. Poderá ser utilizado biodigestor, ficando vedada a implantação de estruturas em alvenaria. A proposta deve abranger todos os custos decorrentes da disponibilização e instalação da solução sanitária, como por exemplo: aquisição e frete dos componentes do sistema, escavação, compactação, reaterro, tubulações, tampões, juntas, conexões, caixa de areia, material filtrante, manta geotêxtil, etc. Deverá ser previsto tampão(cap) nos tubos de limpeza do tanque séptico e filtro, ficando os mesmos um pouco acima do nível da superfície, não podendo ser soterradas. A montagem e instalação do sistema deve atender às normas técnicas pertinentes.\n\nObjetivo e Disposição das Tubulações\nEspera 1 (Bacia Sanitária / Esgoto Negro): Conectada diretamente ao Reator Anaeróbio.\nEspera 2 (Pia e Ralo do Chuveiro / Esgoto Cinza): Direcionada à Caixa de Areia e, em seguida, interligada à entrada do Reator Anaeróbio.\nSaída do Reator Anaeróbio conduzida ao Filtro Anaeróbio de Fluxo Ascendente.\nDisposição Final do efluente tratado no solo: Saída do Filtro Anaeróbio conectada a um Sumidouro de Fluxo Ascendente ou vala de infiltração.\n\nSOMENTE SERÃO ACEITOS ORÇAMENTOS APRESENTADOS POR EMPRESAS QUE TENHAM REALIZADO A VISITA TÉCNICA.\nAgendamento pelo telefone: (47) 3443-8848 ou (47) 98869-1240 das 8hrs as 14:00hrs. Tratar diretamente com a Secretaria de meio ambiente",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Parque Municipal do Carijós",
+        "street": "Rua 750 do Peixe",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Rua da Polícia Civil"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "20 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-20",
+      "executionDeadlineRaw": "20 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [
+        {
+          "index": 1,
+          "kind": "image",
+          "label": "Anexo 1",
+          "sourceFilename": "3cd3ab44-9edd-4e44-a5be-0c7efce1dae7.jpeg",
+          "filenameHint": "12648-01.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12648/image-12648-01-jpeg-b895acea1ed0069a.jpg",
+          "sha256": "1e3ba6d346cb1972c518c1b49712d9588255f90ff4158a35be8c0015098875ae",
+          "mime": "image/jpeg",
+          "bytes": 257796,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:49.657-03:00",
+          "candidateId": "b895acea1ed0069a",
+          "dimensions": {
+            "width": 960,
+            "height": 1280
+          },
+          "validatedAt": "2026-08-19T16:21:45.861Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 2,
+          "kind": "image",
+          "label": "Anexo 2",
+          "sourceFilename": "17202a15-be88-4de3-bae2-5fc82fc03962.png",
+          "filenameHint": "12648-02.png",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12648/image-12648-02-png-67767572b3ebfc4b.png",
+          "sha256": "19a6f0cd9bbd02b84d2b28b2ab8d57275eebcc51b9045f65b7a4ca709e091709",
+          "mime": "image/png",
+          "bytes": 765046,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:49.657-03:00",
+          "candidateId": "67767572b3ebfc4b",
+          "dimensions": {
+            "width": 744,
+            "height": 552
+          },
+          "validatedAt": "2026-08-19T16:21:45.859Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 3,
+          "kind": "image",
+          "label": "Anexo 3",
+          "sourceFilename": "c76b9b38-bd43-402c-abb1-1ab07310f222.jpeg",
+          "filenameHint": "12648-03.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12648/image-12648-03-jpeg-dceb711b780ef556.jpg",
+          "sha256": "b83fab6385ee61e44bf856116ed09363a82a8d1e2e744c552df73cf9e0ec73f7",
+          "mime": "image/jpeg",
+          "bytes": 300737,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:49.657-03:00",
+          "candidateId": "dceb711b780ef556",
+          "dimensions": {
+            "width": 1280,
+            "height": 960
+          },
+          "validatedAt": "2026-08-19T16:21:45.865Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 4,
+          "kind": "image",
+          "label": "Anexo 4",
+          "sourceFilename": "b423be01-695e-4e8a-a30d-d501298266af.jpeg",
+          "filenameHint": "12648-04.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12648/image-12648-04-jpeg-4362848328093651.jpg",
+          "sha256": "86fa6b9c3d97131654bfc07a7bf50350b3c663af2add9fc329ce5540d79218c8",
+          "mime": "image/jpeg",
+          "bytes": 283155,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:49.657-03:00",
+          "candidateId": "4362848328093651",
+          "dimensions": {
+            "width": 960,
+            "height": 1280
+          },
+          "validatedAt": "2026-08-19T16:21:45.853Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 5,
+          "kind": "image",
+          "label": "Anexo 5",
+          "sourceFilename": "d6c0746f-4067-4b76-afb6-fe04dd0bdb52.jpeg",
+          "filenameHint": "12648-05.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12648/image-12648-05-jpeg-9a5145e05c36529f.jpg",
+          "sha256": "11f61f589de100fd560fde5d1d4c5414bd3c068c20c65e5166604a6240155d94",
+          "mime": "image/jpeg",
+          "bytes": 249407,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:49.657-03:00",
+          "candidateId": "9a5145e05c36529f",
+          "dimensions": {
+            "width": 1280,
+            "height": 960
+          },
+          "validatedAt": "2026-08-19T16:21:45.857Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 6,
+          "kind": "image",
+          "label": "Anexo 6",
+          "sourceFilename": "62e00730-809f-466e-8dd0-c5705fc6a5c0.jpeg",
+          "filenameHint": "12648-06.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12648/image-12648-06-jpeg-9765f76bc21110f9.jpg",
+          "sha256": "2df8a73c87b5ebf2397a0eb702e4a6bb0d12872a0a4d28abbc3f2e0d5f0d30d0",
+          "mime": "image/jpeg",
+          "bytes": 151095,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:49.657-03:00",
+          "candidateId": "9765f76bc21110f9",
+          "dimensions": {
+            "width": 1280,
+            "height": 960
+          },
+          "validatedAt": "2026-08-19T16:21:45.860Z",
+          "downloadQualityFlags": []
+        }
+      ],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "execution_before_proposal_close",
+          "kind": "verified",
+          "severity": "critical",
+          "evidence": "Execução publicada para 2026-08-20, antes do fechamento das propostas em 2026-08-24T08:09:31.514099-03:00."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12648.html"
+      }
+    },
+    {
+      "opportunityId": "12670",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12670",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:20:52.122-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-19T13:55:40.451692-03:00",
+      "proposalClosesAtRaw": "2026-08-19T13:55:40.451692-03:00",
+      "expiryLabel": "Expira em 19/08/2026",
+      "serviceName": "Instalação Elétrica Predial",
+      "activity": "Eletricista",
+      "specification": "Realização da fiação elétrica em residências, apartamentos, comércios e edifícios, incluindo a instalação de disjuntores, quadros de distribuição e tomadas",
+      "summaryFromListing": "Contratação de empresa especializada para execução de serviços de adequação das instalações elétricas e implantação de infraestrutura para sistema de videomonitoramento na Garagem da SEINFRA.\nExecução de ampliação e adequação das instalações elétricas da [...]",
+      "description": "Contratação de empresa especializada para execução de serviços de adequação das instalações elétricas e implantação de infraestrutura para sistema de videomonitoramento na Garagem da SEINFRA.\nExecução de ampliação e adequação das instalações elétricas da Garagem da SEINFRA, contemplando a instalação de 6 (seis) tomadas monofásicas e 6 (seis) tomadas bifásicas, bem como a instalação de novo quadro de distribuição elétrica, equipado com 2 (dois) disjuntores de 32A, destinados à distribuição e proteção dos novos pontos elétricos.\nOs serviços deverão incluir o fornecimento e instalação de toda a infraestrutura necessária ao perfeito funcionamento das instalações, incluindo fiação, cabeamento, conduletes, conexões, fixações e demais materiais e acessórios necessários, observando as normas técnicas e de segurança aplicáveis às instalações elétricas.\nDeverá ser executada, ainda, a infraestrutura para instalação de sistema de videomonitoramento, contemplando a instalação de 8 (oito) câmeras, incluindo a instalação de conduletes, eletrodutos, cabeamento, fiação, pontos de alimentação e demais elementos necessários para a correta infraestrutura e conexão dos equipamentos.\nA instalação física e o lançamento da infraestrutura deverão ser executados de forma organizada, segura e adequada às características do imóvel, garantindo condições para o posterior funcionamento do sistema.\nObservação: O fornecimento, configuração, conexão lógica e ativação do sistema de videomonitoramento, bem como o funcionamento das câmeras, serão realizados posteriormente pelo Setor de Tecnologia da Informação (T.I.) da Prefeitura, ficando esta contratação restrita à execução da infraestrutura física, elétrica e cabeamento necessários para a instalação dos equipamentos.\nObrigatória a visita ao local para um orçamento mais preciso.",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Garagem da SEINFRA",
+        "street": "Rua 1029 André Olkoski",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Paese",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Proximo a rua 1000"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "7 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-22",
+      "executionDeadlineRaw": "22 de Agosto de 2026",
+      "questionsAndAnswers": [
+        {
+          "question": "boa tarde.\n\nalgum contato para retirada de dúvidas ?",
+          "answer": "4799280-3664 Eder"
+        },
+        {
+          "question": "Existe a possibilidade de ir até o local para fazer uma visita técnica para o orçamento final ?\nPode entrar em contato pelo 47999997421",
+          "answer": "Existe sim, pode comparecer ao local que vai ter alguem pra te atender"
+        }
+      ],
+      "attachments": [],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12670.html"
+      }
+    },
+    {
+      "opportunityId": "12672",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12672",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:20:54.805-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-19T13:55:21.491881-03:00",
+      "proposalClosesAtRaw": "2026-08-19T13:55:21.491881-03:00",
+      "expiryLabel": "Expira em 19/08/2026",
+      "serviceName": "Instalação de Pontos de Água",
+      "activity": "Bombeiro Hidráulico - Encanador",
+      "specification": "Conexão de torneiras, chuveiros, vasos sanitários, pias e outros dispositivos que utilizam água.",
+      "summaryFromListing": "Contratação de empresa especializada para execução de serviço de remanejamento de bebedouro, com criação de novo ponto de abastecimento de água no local de destino.\n\nDescrição dos serviços:\nExecução da mudança de local de um bebedouro atualmente instal [...]",
+      "description": "Contratação de empresa especializada para execução de serviço de remanejamento de bebedouro, com criação de novo ponto de abastecimento de água no local de destino.\n\nDescrição dos serviços:\nExecução da mudança de local de um bebedouro atualmente instalado, contemplando sua retirada, transporte e reinstalação em novo ponto previamente indicado pela Administração.\n\nO serviço deverá incluir a criação de novo ponto de água no local de instalação, com fornecimento e instalação da tubulação, conexões, registros e demais materiais necessários para realizar a adequada alimentação do bebedouro.\n\nDeverá ser realizada também a adequação das instalações existentes, quando necessária, bem como todos os testes de estanqueidade e funcionamento após a conclusão dos serviços, garantindo que não ocorram vazamentos e que o bebedouro permaneça em perfeitas condições de uso.\n\nA empresa deverá fornecer toda a mão de obra, ferramentas, equipamentos, materiais e acessórios necessários à completa execução do serviço, deixando o local organizado e em condições adequadas após a conclusão.\n\nObrigatório a visita ao local para conferir o trabalho a ser feito e o novo local de instalação",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Mercado Municipal de Itapoá",
+        "street": "Rua 760 Francisco Quintino Correia",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Próximo ao supermercado Sol e Mar"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "7 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-22",
+      "executionDeadlineRaw": "22 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [
+        {
+          "index": 1,
+          "kind": "image",
+          "label": "Anexo 1",
+          "sourceFilename": "aed49480-d008-4f01-84f5-8126ff3e16c9.jpeg",
+          "filenameHint": "12672-01.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12672/image-12672-01-jpeg-c2aa0d10c97d9c31.jpg",
+          "sha256": "7a6a11564fa5208045c02dc765088da51f91deff611818fde3a135ea71c7c23d",
+          "mime": "image/jpeg",
+          "bytes": 155726,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:54.805-03:00",
+          "candidateId": "c2aa0d10c97d9c31",
+          "dimensions": {
+            "width": 960,
+            "height": 1280
+          },
+          "validatedAt": "2026-08-19T16:21:45.868Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 2,
+          "kind": "image",
+          "label": "Anexo 2",
+          "sourceFilename": "41b9dd98-0dd8-4676-8ec6-55952f198e02.jpeg",
+          "filenameHint": "12672-02.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12672/image-12672-02-jpeg-a0072c776ea11738.jpg",
+          "sha256": "613c3f60e5fde3f29a230dea3e73e7d16c61473d5c3530aa1176161fd8607d96",
+          "mime": "image/jpeg",
+          "bytes": 133119,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:20:54.805-03:00",
+          "candidateId": "a0072c776ea11738",
+          "dimensions": {
+            "width": 960,
+            "height": 1280
+          },
+          "validatedAt": "2026-08-19T16:21:45.863Z",
+          "downloadQualityFlags": []
+        }
+      ],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12672.html"
+      }
+    },
+    {
+      "opportunityId": "12673",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12673",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:20:57.502-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-19T13:55:13.394439-03:00",
+      "proposalClosesAtRaw": "2026-08-19T13:55:13.394439-03:00",
+      "expiryLabel": "Expira em 19/08/2026",
+      "serviceName": "Assentamento de Tijolos e Blocos",
+      "activity": "Pedreiro",
+      "specification": "Construção de paredes, muros e divisórias com tijolos cerâmicos, blocos de concreto ou outros materiais.",
+      "summaryFromListing": "Contratação de empresa especializada para execução de adequações físicas na Sala do Empreendedor, contemplando a criação de uma área destinada à cozinha, com aproximadamente 15 m², mediante execução de paredes de fechamento e instalação de porta de acesso [...]",
+      "description": "Contratação de empresa especializada para execução de adequações físicas na Sala do Empreendedor, contemplando a criação de uma área destinada à cozinha, com aproximadamente 15 m², mediante execução de paredes de fechamento e instalação de porta de acesso, incluindo todos os materiais, acabamentos e elementos necessários para a correta execução da estrutura.\nNa área destinada à cozinha, deverão ser executadas todas as adequações das instalações elétricas e hidráulicas necessárias ao funcionamento do ambiente, incluindo a criação de pontos de água, esgoto, tomadas, pontos elétricos e demais instalações necessárias aos equipamentos e utensílios que serão utilizados no local.\nAs instalações deverão ser executadas de forma adequada às normas técnicas aplicáveis, considerando a utilização da área como cozinha e a necessidade de segurança, funcionalidade e facilidade de manutenção.\n\nDeverá ser executada também uma parede para fechamento de corredor, com aproximadamente 5 m², contemplando a instalação de porta, de forma a proporcionar o adequado fechamento e organização do ambiente.\nO serviço deverá incluir a remoção de uma parede existente em drywall, com aproximadamente 5 m², incluindo a desmontagem da estrutura, retirada dos materiais e descarte adequado dos resíduos gerados, bem como a recomposição e regularização das áreas afetadas pela remoção.\nA empresa deverá realizar o fornecimento de mão de obra, materiais, ferramentas, equipamentos, portas, ferragens, tubulações, conexões, cabos, tomadas, caixas, conduítes e demais componentes necessários à completa execução dos serviços.\n\nDeverá ser realizada visita técnica ao local, a fim de verificar as condições existentes, definir os pontos de instalação e levantar as medidas necessárias para a execução dos serviços, além de um orçamento mais preciso.\n\nAo final, os ambientes deverão ser entregues devidamente organizados, com as estruturas instaladas, instalações elétrica e hidráulica funcionando adequadamente.",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Mercado Municipal de Itapoá",
+        "street": "Rua 760 Francisco Quintino Correia",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Próximo ao supermercado Sol e Mar"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "7 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-29",
+      "executionDeadlineRaw": "29 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "multidisciplinary_scope",
+          "kind": "heuristic",
+          "severity": "warning",
+          "evidenceTerms": [
+            "eletric",
+            "hidraulic",
+            "drywall",
+            "porta"
+          ],
+          "evidence": "A demanda classificada como Pedreiro cita pelo menos três outros tipos de trabalho."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12673.html"
+      }
+    },
+    {
+      "opportunityId": "12766",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12766",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:21:01.104-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-20T15:18:42.659940-03:00",
+      "proposalClosesAtRaw": "2026-08-20T15:18:42.659940-03:00",
+      "expiryLabel": "Expira em 20/08/2026",
+      "serviceName": "Instalação de painéis publicitários",
+      "activity": "INSTALADOR(A) DE PAINÉIS PUBLICITÁRIOS",
+      "specification": "Realiza a instalação de painéis publicitários, incluindo anúncios, outdoors, placas e painéis de identificação.",
+      "summaryFromListing": "Contratação de empresa especializada para realizar a manutenção e a reposição dos elementos necessários em 4 estruturas de outdoors de madeira pertencentes à Secretaria Municipal de Turismo e Cultura, incluindo mão de obra, materiais, ferramentas, transpo [...]",
+      "description": "Contratação de empresa especializada para realizar a manutenção e a reposição dos elementos necessários em 4 estruturas de outdoors de madeira pertencentes à Secretaria Municipal de Turismo e Cultura, incluindo mão de obra, materiais, ferramentas, transporte, confecção e instalação de 4 lonas impressas para uso externo, com gramatura mínima de 280 g/m², dimensão final de 1,85 m x 3,85 m e acabamento com ilhós em todo o perímetro. A arte será fornecida e aprovada pela Secretaria após a autorização da demanda.",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Secretaria de Turismo e Cultura",
+        "street": "Travessa 963 Dailton José Grassi",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Ao Lado da Prefeitura"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "15 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-28",
+      "executionDeadlineRaw": "28 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12766.html"
+      }
+    },
+    {
+      "opportunityId": "12770",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12770",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:21:04.419-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-19T13:55:56.530019-03:00",
+      "proposalClosesAtRaw": "2026-08-19T13:55:56.530019-03:00",
+      "expiryLabel": "Expira em 19/08/2026",
+      "serviceName": "Abertura de portas",
+      "activity": "Chaveiro",
+      "specification": "Destrancar portas em situações de emergência.",
+      "summaryFromListing": "CMB 23 SMAS CRAS\nContratação de empresa MEI especializada em prestação de serviços de chaveiro a ser executado no CRAS , abertura porta interna , troca de fechadura .\nOBS.:\n* Considerar mão de obra e material no orçamento\n* Para empresas de outras cid [...]",
+      "description": "CMB 23 SMAS CRAS\nContratação de empresa MEI especializada em prestação de serviços de chaveiro a ser executado no CRAS , abertura porta interna , troca de fechadura .\nOBS.:\n* Considerar mão de obra e material no orçamento\n* Para empresas de outras cidades ou regiões considerar no orçamento também deslocamento, alimentação e hospedagem\nvisita técnica de orçamento das 8:00hs as 16:00hs.",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "CRAS",
+        "street": "Rua 1660 Professor Dinno",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Centro",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "AO LADO DO ABRIGO RECANTO FELIZ"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "15 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-19",
+      "executionDeadlineRaw": "19 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12770.html"
+      }
+    },
+    {
+      "opportunityId": "12800",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12800",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:21:06.865-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-20T15:18:59.968925-03:00",
+      "proposalClosesAtRaw": "2026-08-20T15:18:59.968925-03:00",
+      "expiryLabel": "Expira em 20/08/2026",
+      "serviceName": "Manutenção de Motores Elétricos",
+      "activity": "Eletricista",
+      "specification": "Reparo e manutenção de motores elétricos em máquinas industriais ou equipamentos.",
+      "summaryFromListing": "SERVIÇOS: Mão de obra e materiais., inclusive o motor.\n\nObs.: no portão de entrada da Creche Primeiros Passos, necessário a instalação de um kit completo de portão eletrônico (máquina, gremalheira, controles e botoeira para abrir e fechar da secretaria [...]",
+      "description": "SERVIÇOS: Mão de obra e materiais., inclusive o motor.\n\nObs.: no portão de entrada da Creche Primeiros Passos, necessário a instalação de um kit completo de portão eletrônico (máquina, gremalheira, controles e botoeira para abrir e fechar da secretaria)\n\nMateriais e mão de obra:\n- 01 motor de portão eletrônico;\n- 2,35 mtrs de Gremalheira\n- 01 par de roldanas ferro, blindadas, de 8cm para cantoneira de ferro,\n- solda e ajustes da guia/ batente.",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "ESCOLA MUNICIPAL PRIMEIROS PASSOS",
+        "street": "Avenida 782 José da Silva Pacheco",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Ao lado da Escola Claiton"
+      },
+      "payment": {
+        "method": "TRANSFERENCIA",
+        "term": "5 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-24",
+      "executionDeadlineRaw": "24 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [
+        {
+          "index": 1,
+          "kind": "image",
+          "label": "Anexo 1",
+          "sourceFilename": "b04f7d4c-6387-481b-8932-ef9f76076579.jpeg",
+          "filenameHint": "12800-01.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-01-jpeg-1572e727238afc0d.jpg",
+          "sha256": "4d82073d90e6977fefc81012f73e0c670c7aab9887acbbf75160845d60b40d8f",
+          "mime": "image/jpeg",
+          "bytes": 228302,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "1572e727238afc0d",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.866Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 2,
+          "kind": "image",
+          "label": "Anexo 2",
+          "sourceFilename": "8f14a7a9-93b4-41c1-9e70-a33d58ae8c37.jpeg",
+          "filenameHint": "12800-02.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-02-jpeg-e67e2b6d4dc4d5aa.jpg",
+          "sha256": "c3da0b21a824c407f63c25057aae3780b1954821f6aad525d181cbb921ae8cff",
+          "mime": "image/jpeg",
+          "bytes": 286746,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "e67e2b6d4dc4d5aa",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.882Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 3,
+          "kind": "image",
+          "label": "Anexo 3",
+          "sourceFilename": "7dc670bd-48e5-4d02-9303-05cc49004841.jpeg",
+          "filenameHint": "12800-03.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-03-jpeg-83cc97a5e287f732.jpg",
+          "sha256": "35100a482d0ba25df53bef92356c1373ee32181ff15c8192a36857e10b167eda",
+          "mime": "image/jpeg",
+          "bytes": 151468,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "83cc97a5e287f732",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.876Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 4,
+          "kind": "image",
+          "label": "Anexo 4",
+          "sourceFilename": "c76dcb8e-ff58-4171-a409-f50be7105cd2.jpeg",
+          "filenameHint": "12800-04.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-04-jpeg-3969ccd3b9cf74b7.jpg",
+          "sha256": "c21cf57149ea59d4db4ff9727b018db3ad460c10ce7dfada69ca956eae7ff6df",
+          "mime": "image/jpeg",
+          "bytes": 205849,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "3969ccd3b9cf74b7",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.873Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 5,
+          "kind": "image",
+          "label": "Anexo 5",
+          "sourceFilename": "efea3d63-d63a-4f9f-932b-2ce5f2fc8ec9.jpeg",
+          "filenameHint": "12800-05.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-05-jpeg-e31009c986ed6478.jpg",
+          "sha256": "f83ca9c078c8432464987fe133a3107abd98326a5054f393f1a9ded0ad21e6c3",
+          "mime": "image/jpeg",
+          "bytes": 277336,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "e31009c986ed6478",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.879Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 6,
+          "kind": "image",
+          "label": "Anexo 6",
+          "sourceFilename": "07c6cf70-bab2-42c1-9a89-f343b7576f2f.jpeg",
+          "filenameHint": "12800-06.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-06-jpeg-162891d7db56744a.jpg",
+          "sha256": "5212908b49506f94bb5197a94f07a7579b4e4d30416981581d03a2764ae2ea40",
+          "mime": "image/jpeg",
+          "bytes": 198584,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "162891d7db56744a",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.870Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 7,
+          "kind": "image",
+          "label": "Anexo 7",
+          "sourceFilename": "ba5c4d4d-1614-4e27-91a6-ba8978ec9a1e.jpeg",
+          "filenameHint": "12800-07.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-07-jpeg-3e39b95b6d05bd24.jpg",
+          "sha256": "c19acf037570de92f8d26f900559e7d248c18d9e8429e04c5d7016e218d73541",
+          "mime": "image/jpeg",
+          "bytes": 321576,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "3e39b95b6d05bd24",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.874Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 8,
+          "kind": "image",
+          "label": "Anexo 8",
+          "sourceFilename": "141f3a1d-99bc-442a-8b71-a530a23e3a43.jpeg",
+          "filenameHint": "12800-08.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-08-jpeg-2d629044da7a6b03.jpg",
+          "sha256": "13b65b54a959dd9a6946b2921b2dc27b8684061bb32fdfdbff15622ba83777f0",
+          "mime": "image/jpeg",
+          "bytes": 293326,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "2d629044da7a6b03",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.871Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 9,
+          "kind": "image",
+          "label": "Anexo 9",
+          "sourceFilename": "cbce7fe7-f5d9-4863-a6ea-8574ed40d481.jpeg",
+          "filenameHint": "12800-09.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-09-jpeg-4895b530aa254573.jpg",
+          "sha256": "2b9f4b0f1af30936387e44bd964ec6dd35214f38be9cef875709f6775eba7201",
+          "mime": "image/jpeg",
+          "bytes": 293391,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "4895b530aa254573",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.877Z",
+          "downloadQualityFlags": []
+        },
+        {
+          "index": 10,
+          "kind": "image",
+          "label": "Anexo 10",
+          "sourceFilename": "6e633b35-09b3-44a3-a571-e1e83c47f432.jpeg",
+          "filenameHint": "12800-10.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12800/image-12800-10-jpeg-e55819685e4d6ba7.jpg",
+          "sha256": "2b9f4b0f1af30936387e44bd964ec6dd35214f38be9cef875709f6775eba7201",
+          "mime": "image/jpeg",
+          "bytes": 293391,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:06.865-03:00",
+          "candidateId": "e55819685e4d6ba7",
+          "dimensions": {
+            "width": 1204,
+            "height": 1600
+          },
+          "validatedAt": "2026-08-19T16:21:45.880Z",
+          "downloadQualityFlags": [
+            "duplicate_binary_hash"
+          ]
+        }
+      ],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "potential_category_mismatch",
+          "kind": "heuristic",
+          "severity": "warning",
+          "evidence": "A especificação fala em manutenção de motores, enquanto o texto pede kit completo de portão eletrônico."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12800.html"
+      }
+    },
+    {
+      "opportunityId": "12888",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12888",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:21:09.382-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-21T09:49:45.071010-03:00",
+      "proposalClosesAtRaw": "2026-08-21T09:49:45.071010-03:00",
+      "expiryLabel": "Expira em 21/08/2026",
+      "serviceName": "Construção de Muros e Cercas",
+      "activity": "Pedreiro",
+      "specification": "Edificação de muros de arrimo, cercas e grades.",
+      "summaryFromListing": "CMB 24 – CONTRATAÇÃO DE EMPRESA ESPECIALIZADA PARA CONFECÇÃO E INSTALAÇÃO DE GRADES NAS JANELAS DO CRAS\n\nSolicita-se, em caráter de urgência, a contratação de empresa especializada para a confecção, fornecimento e instalação de grades externas nas janel [...]",
+      "description": "CMB 24 – CONTRATAÇÃO DE EMPRESA ESPECIALIZADA PARA CONFECÇÃO E INSTALAÇÃO DE GRADES NAS JANELAS DO CRAS\n\nSolicita-se, em caráter de urgência, a contratação de empresa especializada para a confecção, fornecimento e instalação de grades externas nas janelas do prédio do CRAS, incluindo todos os materiais necessários, fabricação, transporte e instalação completa.\n\nA contratação tem como objetivo reforçar a segurança patrimonial do imóvel, proporcionando maior proteção ao patrimônio público, aos equipamentos, documentos, materiais e demais bens existentes no espaço.\n\nESPECIFICAÇÕES DAS GRADES\n\nAs grades deverão atender, no mínimo, às seguintes especificações:\n\n- Instalação na parte externa das janelas;\n- Quantidade: 16 janelas, conforme fotos e medidas apresentadas em anexo;\n- Estrutura em tubo metálico;\n- Barras com aproximadamente 2 cm;\n- Espaçamento entre as barras de aproximadamente 8 cm, conforme modelo de referência anexo;\n- Acabamento com pintura eletrostática na cor branca;\n- Material e acabamento resistentes, apropriados para utilização em área externa;\n- Fabricação sob medida, de acordo com as dimensões de cada janela;\n- Fornecimento de todos os materiais, acessórios, elementos de fixação e demais itens necessários;\n- Transporte até o local;\n- Instalação e fixação completa das grades;\n- Entrega do serviço devidamente finalizado, garantindo segurança, resistência e bom acabamento.\n\nAs medidas das 16 janelas, bem como fotografias dos locais de instalação e o modelo utilizado como referência, seguem anexos para elaboração da proposta e execução dos serviços.\n\nPrioridade: Urgente – Segurança Patrimonial.\n\nContato para informações e esclarecimentos:\nFábio – Secretário Municipal de Assistência Social\nTelefone: (41) 99616-4432",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "CRAS SAMAMBAIAL",
+        "street": "Rua 655 Joaquim Peres",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Samambaial",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "AO LADO DO POSTO DE SAUDE"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "15 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-20",
+      "executionDeadlineRaw": "20 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [
+        {
+          "index": 1,
+          "kind": "image",
+          "label": "Anexo 1",
+          "sourceFilename": "98702bd7-9094-4db9-bad2-186e3338712e.jpeg",
+          "filenameHint": "12888-01.jpeg",
+          "declaredMime": null,
+          "declaredSize": null,
+          "localPath": "assets/12888/image-12888-01-jpeg-161ba82a115be840.jpg",
+          "sha256": "71bc73490be87e33f441a91c22abfd851e39b18d13418b7e25a27d1b1f7e4209",
+          "mime": "image/jpeg",
+          "bytes": 147553,
+          "downloadStatus": "downloaded",
+          "discoveredAt": "2026-08-19T13:21:09.382-03:00",
+          "candidateId": "161ba82a115be840",
+          "dimensions": {
+            "width": 1436,
+            "height": 1096
+          },
+          "validatedAt": "2026-08-19T16:21:45.883Z",
+          "downloadQualityFlags": []
+        }
+      ],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "execution_before_proposal_close",
+          "kind": "verified",
+          "severity": "critical",
+          "evidence": "Execução publicada para 2026-08-20, antes do fechamento das propostas em 2026-08-21T09:49:45.071010-03:00."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12888.html"
+      }
+    },
+    {
+      "opportunityId": "12889",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12889",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:21:11.887-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-21T09:48:35.725703-03:00",
+      "proposalClosesAtRaw": "2026-08-21T09:48:35.725703-03:00",
+      "expiryLabel": "Expira em 21/08/2026",
+      "serviceName": "Construção de Muros e Cercas",
+      "activity": "Pedreiro",
+      "specification": "Edificação de muros de arrimo, cercas e grades.",
+      "summaryFromListing": "CMB 25 – CONTRATAÇÃO DE EMPRESA ESPECIALIZADA PARA CONFECÇÃO E INSTALAÇÃO DE GRADES NAS PORTAS DO CRAS\n\nSolicita-se, em caráter de urgência, a contratação de empresa especializada para a confecção, fornecimento e instalação de grades externas nas PORTAS [...]",
+      "description": "CMB 25 – CONTRATAÇÃO DE EMPRESA ESPECIALIZADA PARA CONFECÇÃO E INSTALAÇÃO DE GRADES NAS PORTAS DO CRAS\n\nSolicita-se, em caráter de urgência, a contratação de empresa especializada para a confecção, fornecimento e instalação de grades externas nas PORTAS do prédio do CRAS, incluindo todos os materiais necessários, fabricação, transporte e instalação completa.\n\nA contratação tem como objetivo reforçar a segurança patrimonial do imóvel, proporcionando maior proteção ao patrimônio público, aos equipamentos, documentos, materiais e demais bens existentes no espaço.\n\nESPECIFICAÇÕES DAS GRADES\n\nAs grades deverão atender, no mínimo, às seguintes especificações:\n\n- Instalação na parte externa das PORTAS;\n- Quantidade: 3 PORTAS, conforme fotos e medidas apresentadas em anexo;\n- Estrutura em tubo metálico;\n- Barras com aproximadamente 2 cm;\n- Espaçamento entre as barras de aproximadamente 8 cm, conforme modelo de referência anexo;\n- Acabamento com pintura eletrostática na cor branca;\n- Material e acabamento resistentes, apropriados para utilização em área externa;\n- Fabricação sob medida, de acordo com as dimensões de cada janela;\n- Fornecimento de todos os materiais, acessórios, elementos de fixação e demais itens necessários;\n- Transporte até o local;\n- Instalação e fixação completa das grades;\n- Entrega do serviço devidamente finalizado, garantindo segurança, resistência e bom acabamento.\n\nAs medidas das 3 PORTAS, bem como fotografias dos locais de instalação e o modelo utilizado como referência, seguem anexos para elaboração da proposta e execução dos serviços.\n\nPrioridade: Urgente – Segurança Patrimonial.\n\nContato para informações e esclarecimentos:\nFábio – Secretário Municipal de Assistência Social\nTelefone: (41) 99616-4432",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "CRAS SAMAMBAIAL",
+        "street": "Rua 655 Joaquim Peres",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Samambaial",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "AO LADO DO POSTO DE SAUDE"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "15 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-20",
+      "executionDeadlineRaw": "20 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        },
+        {
+          "code": "execution_before_proposal_close",
+          "kind": "verified",
+          "severity": "critical",
+          "evidence": "Execução publicada para 2026-08-20, antes do fechamento das propostas em 2026-08-21T09:48:35.725703-03:00."
+        },
+        {
+          "code": "attachment_promised_but_absent",
+          "kind": "verified",
+          "severity": "critical",
+          "evidence": "A descrição menciona anexo(s), mas o HTML público não contém mídia do serviço."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12889.html"
+      }
+    },
+    {
+      "opportunityId": "12908",
+      "sourceUrl": "https://contratamaisbrasil.sistema.gov.br/oportunidades/12908",
+      "source": "contrata_brasil",
+      "sourceStatus": "PUBLICADO",
+      "listingFilterStatus": "abertas",
+      "capturedAt": "2026-08-19T13:21:14.348-03:00",
+      "listingPage": 1,
+      "proposalClosesAt": "2026-08-20T10:44:25.601494-03:00",
+      "proposalClosesAtRaw": "2026-08-20T10:44:25.601494-03:00",
+      "expiryLabel": "Expira em 20/08/2026",
+      "serviceName": "Instalação de Calhas e Rufos",
+      "activity": "Pedreiro",
+      "specification": "Aplicação de argamassa para instalar calhas e rufos (proteções contra infiltrações) em telhados e paredes.",
+      "summaryFromListing": "Contratação urgente de empresa especializada para instalar aproximadamente 15 m lineares de calhas e 22 m lineares de rufos na Biblioteca Municipal, incluindo fornecimento de materiais, mão de obra, acessórios, fixadores, vedações, conexões, adequações ne [...]",
+      "description": "Contratação urgente de empresa especializada para instalar aproximadamente 15 m lineares de calhas e 22 m lineares de rufos na Biblioteca Municipal, incluindo fornecimento de materiais, mão de obra, acessórios, fixadores, vedações, conexões, adequações necessárias, testes de estanqueidade e limpeza final. Os quantitativos deverão ser conferidos por vistoria e medição in loco antes da fabricação/instalação.",
+      "requestingAgency": "MSC-PREFEITURA MUNICIPAL DE ITAPOÁ",
+      "executionLocation": {
+        "name": "Secretaria de Turismo e Cultura",
+        "street": "Travessa 963 Dailton José Grassi",
+        "number": null,
+        "complement": null,
+        "neighborhood": "Itapema do Norte",
+        "city": "Itapoá",
+        "state": "SC",
+        "reference": "Ao Lado da Prefeitura"
+      },
+      "payment": {
+        "method": "EMPENHO",
+        "term": "15 dias após a emissão da nota fiscal"
+      },
+      "onlyMei": true,
+      "onlyMeiRaw": "Sim",
+      "executionDeadline": "2026-08-24",
+      "executionDeadlineRaw": "24 de Agosto de 2026",
+      "questionsAndAnswers": [],
+      "attachments": [],
+      "qualityFlags": [
+        {
+          "code": "missing_structural_fields",
+          "kind": "verified",
+          "severity": "warning",
+          "fields": [
+            "executionLocation.number"
+          ],
+          "evidence": "Campos públicos estruturados sem valor na página de detalhe."
+        }
+      ],
+      "rawSource": {
+        "listing": "raw/listings/page-001.html",
+        "detail": "raw/details/12908.html"
+      }
+    }
+  ]
+}

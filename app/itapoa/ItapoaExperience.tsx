@@ -1,232 +1,132 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import type {
+  CapabilityId,
+  MatchApiResponse,
+  MatchResult,
+  OpportunitySnapshot,
+  PersistedState,
+  ProviderProfile,
+  PublicOpportunity,
+  SkillId,
+  SkillLevel,
+} from "./domain";
+import {
+  capabilityCatalog,
+  editableProfileSkillIds,
+  levelLabels,
+  skillCatalog,
+} from "./profile";
 
-type Opportunity = {
-  id: string;
-  activity: string;
-  service: string;
-  summary: string;
-  description: string;
-  match: number;
-  location: string;
-  agency: string;
-  proposalDeadline: string;
-  executionDeadline: string;
-  payment: string;
-  attachments: number;
-  alerts?: string[];
-  tags: string[];
+type Props = {
+  snapshot: OpportunitySnapshot;
+  initialProfile: ProviderProfile;
+  initialMatches: MatchApiResponse;
 };
 
-const opportunities: Opportunity[] = [
-  {
-    id: "12908",
-    activity: "Pedreiro",
-    service: "Instalação de calhas e rufos",
-    summary: "Cerca de 15 m de calhas e 22 m de rufos, com vedação, teste de estanqueidade e limpeza final.",
-    description: "Contratação urgente para instalar aproximadamente 15 metros lineares de calhas e 22 metros lineares de rufos na Biblioteca Municipal, incluindo materiais, mão de obra, acessórios, fixadores, vedações, conexões, adequações, testes de estanqueidade e limpeza final. Os quantitativos devem ser conferidos por vistoria e medição no local antes da fabricação e instalação.",
-    match: 96,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-20T10:44:25-03:00",
-    executionDeadline: "24 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 0,
-    tags: ["MEI", "Materiais inclusos", "Vistoria necessária"],
-  },
-  {
-    id: "12670",
-    activity: "Eletricista",
-    service: "Adequação elétrica e infraestrutura para câmeras",
-    summary: "Novas tomadas, quadro de distribuição e infraestrutura física para oito câmeras na garagem da SEINFRA.",
-    description: "Ampliação e adequação das instalações elétricas da Garagem da SEINFRA, com seis tomadas monofásicas, seis tomadas bifásicas, novo quadro de distribuição e infraestrutura física, elétrica e de cabeamento para oito câmeras. A ativação lógica das câmeras será feita posteriormente pelo setor de tecnologia da Prefeitura.",
-    match: 93,
-    location: "Paese · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-19T13:55:40-03:00",
-    executionDeadline: "22 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 0,
-    tags: ["MEI", "Elétrica predial", "Visita obrigatória"],
-  },
-  {
-    id: "12770",
-    activity: "Chaveiro",
-    service: "Abertura de porta e troca de fechadura",
-    summary: "Abertura de porta interna do CRAS e substituição da fechadura, incluindo material e deslocamento.",
-    description: "Serviço de chaveiro no CRAS para abertura de uma porta interna e troca da fechadura. O orçamento deve incluir mão de obra e material. Prestadores de outras cidades também devem incluir deslocamento, alimentação e hospedagem.",
-    match: 91,
-    location: "Centro · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-19T13:55:56-03:00",
-    executionDeadline: "19 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 0,
-    tags: ["MEI", "Serviço rápido", "Material incluso"],
-  },
-  {
-    id: "12672",
-    activity: "Encanador",
-    service: "Remanejamento de bebedouro e novo ponto de água",
-    summary: "Retirada, transporte e reinstalação do bebedouro, com tubulação, conexões, registros e testes.",
-    description: "Remanejamento de um bebedouro para um novo local, incluindo retirada, transporte, reinstalação, criação de novo ponto de água, tubulações, conexões, registros e testes de estanqueidade e funcionamento.",
-    match: 89,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-19T13:55:21-03:00",
-    executionDeadline: "22 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 2,
-    tags: ["MEI", "Hidráulica", "2 fotos"],
-  },
-  {
-    id: "12800",
-    activity: "Eletricista",
-    service: "Kit completo para portão eletrônico",
-    summary: "Motor, cremalheira, roldanas, controles, botoeira, solda e ajustes no portão de entrada de uma creche.",
-    description: "Instalação de kit completo de portão eletrônico na Creche Primeiros Passos, incluindo motor, 2,35 metros de cremalheira, par de roldanas blindadas, controles, botoeira, solda e ajustes da guia e do batente.",
-    match: 87,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-20T15:18:59-03:00",
-    executionDeadline: "24 de agosto de 2026",
-    payment: "Transferência",
-    attachments: 10,
-    alerts: ["A categoria pública não descreve todo o escopo"],
-    tags: ["MEI", "10 fotos", "Motor incluso"],
-  },
-  {
-    id: "12888",
-    activity: "Pedreiro",
-    service: "Grades para 16 janelas do CRAS",
-    summary: "Fabricação sob medida, pintura eletrostática branca e instalação externa completa.",
-    description: "Confecção, fornecimento e instalação de grades externas em 16 janelas do CRAS. As grades devem usar tubo metálico, barras de aproximadamente 2 cm, espaçamento aproximado de 8 cm e pintura eletrostática branca.",
-    match: 84,
-    location: "Samambaial · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-21T09:49:45-03:00",
-    executionDeadline: "20 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 1,
-    alerts: ["Execução publicada antes do fechamento das propostas"],
-    tags: ["MEI", "1 anexo", "Prazo inconsistente"],
-  },
-  {
-    id: "12766",
-    activity: "Instalador de painéis",
-    service: "Manutenção de quatro outdoors",
-    summary: "Reposição de elementos estruturais e instalação de quatro lonas impressas para uso externo.",
-    description: "Manutenção e reposição dos elementos necessários em quatro estruturas de outdoors de madeira, incluindo mão de obra, materiais, transporte e quatro lonas externas de 1,85 m por 3,85 m.",
-    match: 80,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-20T15:18:42-03:00",
-    executionDeadline: "28 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 0,
-    tags: ["MEI", "Impressão", "Instalação externa"],
-  },
-  {
-    id: "12673",
-    activity: "Pedreiro",
-    service: "Criação de cozinha na Sala do Empreendedor",
-    summary: "Alvenaria, porta, elétrica, hidráulica, remoção de drywall e descarte de resíduos.",
-    description: "Adequações físicas para criação de cozinha de aproximadamente 15 m² na Sala do Empreendedor, com paredes, porta, instalações elétricas e hidráulicas, fechamento de corredor e remoção de parede em drywall.",
-    match: 76,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-19T13:55:13-03:00",
-    executionDeadline: "29 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 0,
-    alerts: ["Demanda multidisciplinar: alvenaria, elétrica e hidráulica"],
-    tags: ["MEI", "Obra multidisciplinar", "Vistoria"],
-  },
-  {
-    id: "12889",
-    activity: "Pedreiro",
-    service: "Grades para três portas do CRAS",
-    summary: "Grades externas sob medida, incluindo fabricação, transporte, pintura e instalação.",
-    description: "Confecção e instalação de grades externas para três portas do CRAS, com tubos metálicos, pintura eletrostática branca, materiais, transporte, fixação e acabamento completo.",
-    match: 73,
-    location: "Samambaial · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-21T09:48:35-03:00",
-    executionDeadline: "20 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 0,
-    alerts: ["O texto promete medidas e fotos, mas não há anexos", "Execução anterior ao fechamento das propostas"],
-    tags: ["MEI", "Anexo ausente", "Prazo inconsistente"],
-  },
-  {
-    id: "12648",
-    activity: "Encanador",
-    service: "Sistema individual de tratamento de esgoto",
-    summary: "Solução sanitária completa para posto de guarda-vidas, com reatores, tubulações e infiltração.",
-    description: "Fornecimento e instalação de sistema individual de tratamento de esgoto para o Posto Guarda-Vidas nº 12, com capacidade mínima de 100 litros por dia, incluindo caixa de areia, tanque séptico, filtro anaeróbio e sumidouro ou vala de infiltração.",
-    match: 67,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-24T08:09:31-03:00",
-    executionDeadline: "20 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 6,
-    alerts: ["Execução publicada antes do fechamento das propostas"],
-    tags: ["MEI", "6 anexos", "Maior complexidade"],
-  },
-  {
-    id: "12644",
-    activity: "Pedreiro",
-    service: "Pilares de concreto para dois contêineres",
-    summary: "Pilares elevados para reduzir risco de alagamento, com material, equipamentos e descarte.",
-    description: "Execução de pilares de concreto com manilhas para elevar e apoiar dois contêineres usados como depósito, reduzindo o risco de alagamentos e garantindo estabilidade.",
-    match: 64,
-    location: "Itapema do Norte · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-24T08:09:49-03:00",
-    executionDeadline: "20 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 6,
-    alerts: ["Execução publicada antes do fechamento das propostas"],
-    tags: ["MEI", "6 imagens", "Vistoria obrigatória"],
-  },
-  {
-    id: "12500",
-    activity: "Instalador de painéis",
-    service: "Perfurite para portas e janelas do CRAS",
-    summary: "Confecção e aplicação de adesivo perfurado para reforço visual e segurança patrimonial.",
-    description: "Confecção e instalação de perfurite nas portas e janelas do CRAS, incluindo materiais, fabricação, transporte e aplicação completa. A arte oficial será fornecida pela Administração.",
-    match: 58,
-    location: "Samambaial · Itapoá",
-    agency: "Prefeitura Municipal de Itapoá",
-    proposalDeadline: "2026-08-22T08:09:59-03:00",
-    executionDeadline: "17 de agosto de 2026",
-    payment: "Empenho",
-    attachments: 5,
-    alerts: ["Execução publicada antes do fechamento das propostas"],
-    tags: ["MEI", "5 imagens", "Prazo inconsistente"],
-  },
-];
-
 const formatDeadline = (value: string) =>
-  new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" })
-    .format(new Date(value))
-    .replace(".", "");
+  new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date(value)).replace(".", "");
 
-export function ItapoaExperience() {
-  const [selectedId, setSelectedId] = useState("12908");
-  const [onlyHighMatch, setOnlyHighMatch] = useState(false);
+const formatSnapshot = (value: string) =>
+  new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date(value));
+
+const cleanSummary = (opportunity: PublicOpportunity) => {
+  const text = opportunity.summaryFromListing || opportunity.description;
+  return text.length > 180 ? `${text.slice(0, 177).trim()}…` : text;
+};
+
+const locationLabel = (opportunity: PublicOpportunity) =>
+  [opportunity.executionLocation.neighborhood, opportunity.executionLocation.city]
+    .filter(Boolean)
+    .join(" · ");
+
+const matchClass = (match: MatchResult) => {
+  if (match.blocked) return "blocked";
+  if (match.band === "recommended") return "strong";
+  if (match.band === "review") return "medium";
+  return "low";
+};
+
+const matchLabel = (match: MatchResult) => {
+  if (match.blocked) return `${match.score}% · impedida`;
+  if (match.band === "recommended") return `${match.score}% compatível`;
+  if (match.band === "review") return `${match.score}% · revisar`;
+  return `${match.score}% · fora do perfil`;
+};
+
+const paymentLabel = (opportunity: PublicOpportunity) =>
+  [opportunity.payment.method, opportunity.payment.term].filter(Boolean).join(" · ") || "Não informado";
+
+export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, initialMatches }: Props) {
+  const [snapshot, setSnapshot] = useState(initialSnapshot);
+  const [profile, setProfile] = useState(initialProfile);
+  const [draftProfile, setDraftProfile] = useState(initialProfile);
+  const [matchResponse, setMatchResponse] = useState(initialMatches);
+  const [selectedId, setSelectedId] = useState(initialMatches.matches[0]?.opportunityId ?? snapshot.opportunities[0].opportunityId);
+  const [onlyRecommended, setOnlyRecommended] = useState(false);
   const [panelMode, setPanelMode] = useState<"detail" | "conversation" | "application">("detail");
   const [conversationStep, setConversationStep] = useState(0);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
   const [draftReady, setDraftReady] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<PersistedState["lastRefresh"]>({ status: "seeded", source: "committed_snapshot", capturedAt: initialSnapshot.snapshot.capturedAt, opportunityCount: initialSnapshot.opportunities.length, requirementsCount: 0, model: null });
 
-  const selected = opportunities.find((item) => item.id === selectedId) ?? opportunities[0];
-  const visibleOpportunities = useMemo(
-    () => opportunities.filter((item) => !onlyHighMatch || item.match >= 85),
-    [onlyHighMatch],
+  const applyState = (state: PersistedState) => {
+    setSnapshot(state.snapshot); setProfile(state.profile); setDraftProfile(state.profile); setMatchResponse(state.matches); setLastRefresh(state.lastRefresh);
+    const next = state.matches.matches.find((item) => item.band === "recommended") ?? state.matches.matches[0];
+    if (next) setSelectedId(next.opportunityId);
+  };
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/itapoa/state", { cache: "no-store" }).then(async (response) => {
+      if (!response.ok) throw new Error("Não foi possível carregar os dados persistidos."); return response.json() as Promise<PersistedState>;
+    }).then((state) => { if (active) applyState(state); }).catch((error) => { if (active) setRefreshMessage(error instanceof Error ? error.message : "Falha ao carregar o banco."); });
+    return () => { active = false; };
+  }, []);
+
+  const opportunityById = useMemo(
+    () => new Map(snapshot.opportunities.map((item) => [item.opportunityId, item])),
+    [snapshot.opportunities],
   );
+  const matchById = useMemo(
+    () => new Map(matchResponse.matches.map((item) => [item.opportunityId, item])),
+    [matchResponse.matches],
+  );
+  const rankedOpportunities = useMemo(
+    () => matchResponse.matches
+      .map((match) => opportunityById.get(match.opportunityId))
+      .filter((item): item is PublicOpportunity => Boolean(item)),
+    [matchResponse.matches, opportunityById],
+  );
+  const visibleOpportunities = useMemo(
+    () => rankedOpportunities.filter((item) => !onlyRecommended || matchById.get(item.opportunityId)?.band === "recommended"),
+    [matchById, onlyRecommended, rankedOpportunities],
+  );
+
+  const selected = opportunityById.get(selectedId) ?? rankedOpportunities[0];
+  const selectedMatch = matchById.get(selected.opportunityId) ?? matchResponse.matches[0];
+  const recommendedCount = matchResponse.matches.filter((match) => match.band === "recommended").length;
+  const blockedCount = matchResponse.matches.filter((match) => match.blocked).length;
+  const attachmentCount = snapshot.opportunities.reduce((sum, opportunity) => sum + opportunity.attachments.length, 0);
+  const canAdvance = selectedMatch.band === "recommended" && !selectedMatch.blocked;
+  const profileCompletion = profile.skills.length >= 3 && profile.capabilities.length >= 4 ? 100 : 80;
 
   const chooseOpportunity = (id: string) => {
     setSelectedId(id);
@@ -235,10 +135,96 @@ export function ItapoaExperience() {
     setDraftReady(false);
   };
 
+  const openProfile = () => {
+    setDraftProfile(profile);
+    setProfileError(null);
+    setProfileOpen(true);
+  };
+
   const startConversation = () => {
+    if (!canAdvance) {
+      openProfile();
+      return;
+    }
     setPanelMode("conversation");
     setConversationStep(0);
   };
+
+  const toggleSkill = (skillId: SkillId, checked: boolean) => {
+    setDraftProfile((current) => {
+      const skills = checked
+        ? [...current.skills, { id: skillId, level: "experienced" as const, evidence: "self_declared" as const }]
+        : current.skills.filter((skill) => skill.id !== skillId);
+      return {
+        ...current,
+        skills,
+        exclusions: checked
+          ? current.exclusions.filter((id) => id !== skillId)
+          : Array.from(new Set([...current.exclusions, skillId])),
+      };
+    });
+  };
+
+  const changeSkillLevel = (skillId: SkillId, level: SkillLevel) => {
+    setDraftProfile((current) => ({
+      ...current,
+      skills: current.skills.map((skill) => skill.id === skillId ? { ...skill, level } : skill),
+    }));
+  };
+
+  const toggleCapability = (capabilityId: CapabilityId, checked: boolean) => {
+    setDraftProfile((current) => ({
+      ...current,
+      capabilities: checked
+        ? Array.from(new Set([...current.capabilities, capabilityId]))
+        : current.capabilities.filter((id) => id !== capabilityId),
+    }));
+  };
+
+  const saveProfile = async () => {
+    setProfileSaving(true);
+    setProfileError(null);
+    const nextProfile: ProviderProfile = { ...draftProfile, updatedAt: new Date().toISOString() };
+
+    try {
+      const response = await fetch("/api/itapoa/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ profile: nextProfile }),
+      });
+      if (!response.ok) throw new Error("Não foi possível recalcular os matches.");
+      const result = await response.json() as PersistedState;
+      applyState(result);
+      setPanelMode("detail");
+      setProfileOpen(false);
+    } catch (error) {
+      setProfileError(error instanceof Error ? error.message : "Falha ao atualizar o perfil.");
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
+  const refreshOpportunities = async () => {
+    setRefreshing(true); setRefreshMessage(null);
+    try {
+      const response = await fetch("/api/itapoa/refresh", { method: "POST" });
+      const result = await response.json() as PersistedState | { error: string; state?: PersistedState };
+      if (!response.ok) {
+        if ("state" in result && result.state) applyState(result.state);
+        throw new Error("error" in result ? result.error : "Falha ao atualizar oportunidades.");
+      }
+      applyState(result as PersistedState); setRefreshMessage("Oportunidades ao vivo atualizadas e comparadas com seu perfil.");
+    } catch (error) { setRefreshMessage(error instanceof Error ? error.message : "Falha ao atualizar oportunidades."); }
+    finally { setRefreshing(false); }
+  };
+
+  const selectedSkillLabels = profile.skills.map((skill) => skillCatalog[skill.id].shortLabel);
+  const currentVisitQuestion = selectedMatch.requiredCapabilities.includes("technical_visit")
+    ? "Você consegue fazer a vistoria e as medições antes de enviar o orçamento?"
+    : "Você consegue confirmar o escopo e o local antes de enviar o orçamento?";
+  const currentCostQuestion = selectedMatch.requiredCapabilities.includes("materials_supply")
+    ? "Seu preço pode incluir materiais, transporte e limpeza previstos no escopo?"
+    : "Seu preço pode incluir todos os custos de execução e deslocamento?";
 
   return (
     <main className="shell">
@@ -247,97 +233,135 @@ export function ItapoaExperience() {
           <span className="brand-mark">1º</span><span>Primeiro Contrato</span>
         </a>
         <nav className="nav" aria-label="Navegação principal">
-          <button className="nav-item active" type="button" onClick={() => setPanelMode("detail")}><span aria-hidden="true">◫</span> Oportunidades <b>12</b></button>
+          <button className="nav-item active" type="button" onClick={() => setPanelMode("detail")}><span aria-hidden="true">◫</span> Oportunidades <b>{snapshot.opportunities.length}</b></button>
           <button className="nav-item" type="button" onClick={startConversation}><span aria-hidden="true">◎</span> Conversa guiada</button>
-          <button className="nav-item" type="button" onClick={() => setPanelMode("application")}><span aria-hidden="true">✓</span> Aplicação <b>1</b></button>
+          <button className="nav-item" type="button" disabled={!canAdvance} onClick={() => setPanelMode("application")}><span aria-hidden="true">✓</span> Aplicação <b>{canAdvance ? "1" : "0"}</b></button>
         </nav>
         <div className="profile-card">
-          <div className="profile-row"><span className="avatar">JM</span><span><strong>JM Reparos</strong><small>Perfil de demonstração</small></span></div>
-          <div className="profile-progress"><span /></div>
-          <div className="profile-meta"><span>Perfil completo</span><strong>78%</strong></div>
-          <button type="button" onClick={() => setProfileOpen(true)}>Completar perfil</button>
+          <div className="profile-row"><span className="avatar">JM</span><span><strong>{profile.displayName}</strong><small>Perfil simulado · dados declarados</small></span></div>
+          <div className="profile-progress"><span style={{ width: `${profileCompletion}%` }} /></div>
+          <div className="profile-meta"><span>Perfil pronto para match</span><strong>{profileCompletion}%</strong></div>
+          <button type="button" onClick={openProfile}>Ajustar perfil e recalcular</button>
         </div>
       </aside>
 
       <section className="workspace" id="top">
         <header className="topbar">
-          <div><span className="eyebrow">Itapoá · Santa Catarina</span><h1>Boas oportunidades encontraram você.</h1></div>
-          <div className="top-actions"><span className="snapshot"><i /> Snapshot público · 19 ago</span><button className="icon-button" type="button" aria-label="Abrir notificações">●</button></div>
+          <div><span className="eyebrow">Itapoá · Santa Catarina</span><h1>{recommendedCount} oportunidades combinam com o perfil.</h1></div>
+          <div className="top-actions">
+            <button className="snapshot refresh-opportunities" type="button" onClick={refreshOpportunities} disabled={refreshing}><i /> {refreshing ? "Coletando e analisando…" : "Atualizar oportunidades"}</button>
+            <small className="snapshot-meta">{lastRefresh.source === "live_contrata_brasil" ? "Atualização ao vivo" : "Snapshot público"} · {formatSnapshot(lastRefresh.capturedAt)}</small>
+            {refreshMessage ? <span className="refresh-message" role="status">{refreshMessage}</span> : null}
+          </div>
         </header>
 
-        <section className="summary-strip" aria-label="Resumo da inbox">
-          <div><strong>12</strong><span>oportunidades no snapshot</span></div>
-          <div><strong>5</strong><span>com alerta de qualidade</span></div>
-          <div><strong>30</strong><span>fotos ou anexos encontrados</span></div>
-          <p><span aria-hidden="true">✦</span> A análise considera serviços, localização, capacidade e riscos antes de recomendar.</p>
+        <section className="summary-strip" aria-label="Resumo do matching">
+          <div><strong>{recommendedCount}</strong><span>recomendadas pelo perfil</span></div>
+          <div><strong>{blockedCount}</strong><span>com impedimento detectado</span></div>
+          <div><strong>{attachmentCount}</strong><span>fotos ou anexos validados</span></div>
+          <p><span aria-hidden="true">✦</span> A IA extrai os requisitos de cada edital; a pontuação auditável compara esses requisitos com o perfil salvo. Alertas não são escondidos pelo score.</p>
         </section>
+
+        <div className="profile-evidence-bar" aria-label="Perfil usado no cálculo">
+          <div><span>Perfil usado no cálculo</span><strong>{profile.displayName} · MEI ativo · equipe de {profile.teamSize}</strong></div>
+          <p>{selectedSkillLabels.join(" · ")}</p>
+          <button type="button" onClick={openProfile}>Editar perfil</button>
+        </div>
 
         <div className="content-grid" id="oportunidades">
           <section className="inbox" aria-labelledby="inbox-heading">
             <div className="section-heading">
-              <div><span className="eyebrow">Sua inbox</span><h2 id="inbox-heading">{onlyHighMatch ? "Alta compatibilidade" : "Todas as oportunidades"}</h2></div>
-              <button className={`filter-button ${onlyHighMatch ? "filter-active" : ""}`} type="button" onClick={() => setOnlyHighMatch((value) => !value)}>
-                {onlyHighMatch ? "Mostrar todas" : "Só alta compatibilidade"} <span>{onlyHighMatch ? "12" : "5"}</span>
+              <div><span className="eyebrow">Ranking calculado</span><h2 id="inbox-heading">{onlyRecommended ? "Recomendadas agora" : "Todas as oportunidades"}</h2></div>
+              <button className={`filter-button ${onlyRecommended ? "filter-active" : ""}`} type="button" onClick={() => setOnlyRecommended((value) => !value)}>
+                {onlyRecommended ? "Mostrar todas" : "Só recomendadas"} <span>{onlyRecommended ? snapshot.opportunities.length : recommendedCount}</span>
               </button>
             </div>
 
             <div className="opportunity-list">
-              {visibleOpportunities.map((opportunity) => (
-                <div
-                  className={`opportunity-card ${selected.id === opportunity.id ? "selected" : ""}`}
-                  key={opportunity.id}
-                  onClick={() => chooseOpportunity(opportunity.id)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      chooseOpportunity(opportunity.id);
-                    }
-                  }}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <div className="card-topline"><span className="activity">{opportunity.activity}</span><span className={`match ${opportunity.match >= 85 ? "strong" : opportunity.match >= 70 ? "medium" : "low"}`}>{opportunity.match}% compatível</span></div>
-                  <h3>{opportunity.service}</h3>
-                  <p>{opportunity.summary}</p>
-                  <div className="tags">{opportunity.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                  {opportunity.alerts?.length ? <div className="card-alert"><b>!</b> {opportunity.alerts[0]}</div> : null}
-                  <div className="card-footer"><span>Prazo: {formatDeadline(opportunity.proposalDeadline)} · #{opportunity.id}</span><span className="card-link">Ver oportunidade <b>→</b></span></div>
-                </div>
-              ))}
+              {visibleOpportunities.map((opportunity) => {
+                const match = matchById.get(opportunity.opportunityId) as MatchResult;
+                const alert = opportunity.qualityFlags.find((flag) => flag.severity === "critical");
+                return (
+                  <div
+                    className={`opportunity-card ${selected.opportunityId === opportunity.opportunityId ? "selected" : ""}`}
+                    key={opportunity.opportunityId}
+                    onClick={() => chooseOpportunity(opportunity.opportunityId)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        chooseOpportunity(opportunity.opportunityId);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="card-topline"><span className="activity">{opportunity.activity}</span><span className={`match ${matchClass(match)}`}>{matchLabel(match)}</span></div>
+                    <h3>{opportunity.serviceName}</h3>
+                    <p>{cleanSummary(opportunity)}</p>
+                    <div className="tags">
+                      {opportunity.onlyMei ? <span>Apenas MEI</span> : null}
+                      <span>{locationLabel(opportunity)}</span>
+                      <span>{opportunity.attachments.length} anexo{opportunity.attachments.length === 1 ? "" : "s"}</span>
+                    </div>
+                    {alert ? <div className="card-alert"><b>!</b> {alert.evidence}</div> : null}
+                    <div className="card-footer"><span>Prazo: {formatDeadline(opportunity.proposalClosesAt)} · #{opportunity.opportunityId}</span><span className="card-link">Ver análise <b>→</b></span></div>
+                  </div>
+                );
+              })}
             </div>
           </section>
 
           <aside className={`detail-panel mode-${panelMode}`} aria-label="Painel da oportunidade selecionada">
             {panelMode === "detail" ? (
               <>
-                <div className="detail-kicker"><span>Oportunidade selecionada</span><b>{selected.match}%</b></div>
-                <h2>{selected.service}</h2>
+                <div className="detail-kicker"><span>Análise de compatibilidade</span><b className={matchClass(selectedMatch)}>{selectedMatch.score}%</b></div>
+                <h2>{selected.serviceName}</h2>
                 <p className="detail-lead">{selected.description}</p>
-                <div className="insight-box"><span aria-hidden="true">✦</span><div><strong>Por que combina</strong><p>Você atende Itapoá e informou experiência compatível. A IA ainda vai confirmar os detalhes que faltam.</p></div></div>
-                {selected.alerts?.map((alert) => <div className="quality-alert" key={alert}><b>Alerta</b><span>{alert}</span></div>)}
+
+                <div className="match-breakdown" aria-label="Composição da pontuação">
+                  <div><span>Perfil e local</span><b>{selectedMatch.breakdown.legalAndLocation}/25</b></div>
+                  <div><span>Técnica</span><b>{selectedMatch.breakdown.technical}/55</b></div>
+                  <div><span>Operação</span><b>{selectedMatch.breakdown.operational}/15</b></div>
+                  <div><span>Evidências</span><b>{selectedMatch.breakdown.evidence}/5</b></div>
+                </div>
+
+                <div className="insight-box"><span aria-hidden="true">✦</span><div><strong>Por que {selectedMatch.band === "recommended" ? "recomendamos" : "precisa de revisão"}</strong><p>{selectedMatch.reasons.slice(0, 3).join(". ") || "O perfil não apresentou evidência suficiente para este serviço."}.</p></div></div>
+                {selectedMatch.blockers.map((blocker) => <div className="quality-alert" key={blocker}><b>Impedimento</b><span>{blocker}</span></div>)}
+
                 <dl className="facts">
-                  <div><dt>Local</dt><dd>{selected.location}</dd></div><div><dt>Pagamento</dt><dd>{selected.payment}</dd></div>
-                  <div><dt>Propostas até</dt><dd>{formatDeadline(selected.proposalDeadline)}</dd></div><div><dt>Execução</dt><dd>{selected.executionDeadline}</dd></div>
-                  <div><dt>Anexos</dt><dd>{selected.attachments ? `${selected.attachments} arquivo${selected.attachments > 1 ? "s" : ""}` : "Nenhum"}</dd></div><div><dt>Perfil</dt><dd>Apenas MEI</dd></div>
+                  <div><dt>Local</dt><dd>{locationLabel(selected)}</dd></div><div><dt>Órgão</dt><dd>{selected.requestingAgency}</dd></div>
+                  <div><dt>Pagamento</dt><dd>{paymentLabel(selected)}</dd></div><div><dt>Propostas até</dt><dd>{formatDeadline(selected.proposalClosesAt)}</dd></div>
+                  <div><dt>Execução publicada</dt><dd>{selected.executionDeadlineRaw}</dd></div><div><dt>Anexos</dt><dd>{selected.attachments.length}</dd></div>
                 </dl>
-                <div className="checklist"><div className="checklist-heading"><span>Antes de aplicar</span><b>2 confirmações</b></div><p><i>✓</i> Localização e atividade compatíveis</p><p><i>?</i> Confirmar disponibilidade para vistoria</p><p><i>?</i> Confirmar materiais no orçamento</p></div>
-                <button className="primary-action" type="button" onClick={startConversation}><span aria-hidden="true">◎</span> Conversar sobre esta oportunidade</button>
-                <small className="safety-note">Você revisa tudo antes de enviar uma proposta.</small>
+
+                <div className="checklist">
+                  <div className="checklist-heading"><span>Leitura do perfil</span><b>{selectedMatch.gaps.length + selectedMatch.blockers.length} pendência{selectedMatch.gaps.length + selectedMatch.blockers.length === 1 ? "" : "s"}</b></div>
+                  {selectedMatch.reasons.slice(0, 3).map((reason) => <p key={reason}><i>✓</i> {reason}</p>)}
+                  {selectedMatch.gaps.slice(0, 3).map((gap) => <p key={gap}><i>?</i> {gap}</p>)}
+                  {selectedMatch.blockers.slice(0, 2).map((blocker) => <p className="blocked-check" key={blocker}><i>!</i> {blocker}</p>)}
+                </div>
+
+                {canAdvance ? (
+                  <button className="primary-action" type="button" onClick={startConversation}><span aria-hidden="true">◎</span> Validar detalhes desta oportunidade</button>
+                ) : (
+                  <button className="primary-action secondary-action" type="button" onClick={openProfile}>Ver o que falta no perfil</button>
+                )}
+                <a className="source-link" href={selected.sourceUrl} target="_blank" rel="noreferrer">Abrir fonte no Contrata+Brasil ↗</a>
               </>
             ) : null}
 
             {panelMode === "conversation" ? (
               <section className="conversation-panel" aria-live="polite">
-                <button className="back-button" type="button" onClick={() => setPanelMode("detail")}>← Voltar ao detalhe</button>
-                <span className="conversation-status"><i /> Conversa guiada</span>
-                <h2>Vamos deixar sua proposta pronta.</h2>
+                <button className="back-button" type="button" onClick={() => setPanelMode("detail")}>← Voltar à análise</button>
+                <span className="conversation-status"><i /> Validação do match</span>
+                <h2>Confirme o que não vem do perfil.</h2>
                 <div className="chat-thread">
-                  <div className="assistant-message"><b>Primeiro Contrato</b><p>Li a oportunidade #{selected.id}. Já validei seu perfil e preciso confirmar só duas informações.</p></div>
-                  <div className="assistant-message"><b>1 de 2</b><p>Você consegue fazer a vistoria e as medições antes de enviar o orçamento?</p></div>
-                  {conversationStep === 0 ? <div className="answer-options"><button type="button" onClick={() => setConversationStep(1)}>Sim, consigo</button><button type="button" onClick={() => setConversationStep(1)}>Preciso agendar</button></div> : <div className="user-message">Sim, consigo fazer a vistoria.</div>}
-                  {conversationStep >= 1 ? <div className="assistant-message"><b>2 de 2</b><p>Seu preço pode incluir materiais, transporte e limpeza final?</p></div> : null}
+                  <div className="assistant-message"><b>Primeiro Contrato</b><p>O score de {selectedMatch.score}% veio do perfil e dos requisitos da oportunidade #{selected.opportunityId}. Restam duas confirmações específicas deste trabalho.</p></div>
+                  <div className="assistant-message"><b>1 de 2</b><p>{currentVisitQuestion}</p></div>
+                  {conversationStep === 0 ? <div className="answer-options"><button type="button" onClick={() => setConversationStep(1)}>Sim, consigo</button><button type="button" onClick={() => setConversationStep(1)}>Preciso agendar</button></div> : <div className="user-message">Sim, consigo confirmar no local.</div>}
+                  {conversationStep >= 1 ? <div className="assistant-message"><b>2 de 2</b><p>{currentCostQuestion}</p></div> : null}
                   {conversationStep === 1 ? <div className="answer-options"><button type="button" onClick={() => setConversationStep(2)}>Sim, incluo tudo</button><button type="button" onClick={() => setConversationStep(2)}>Quero calcular primeiro</button></div> : null}
-                  {conversationStep >= 2 ? <><div className="user-message">Sim, vou incluir todos os custos.</div><div className="assistant-message ready-message"><b>Pronto para avançar</b><p>Seu perfil atende aos requisitos principais. Preparei um resumo para o formulário do Contrata+Brasil.</p></div></> : null}
+                  {conversationStep >= 2 ? <><div className="user-message">Sim, vou incluir todos os custos.</div><div className="assistant-message ready-message"><b>Match validado</b><p>O perfil cobre o serviço e você confirmou as condições específicas desta oportunidade. O rascunho pode ser preparado.</p></div></> : null}
                 </div>
                 {conversationStep >= 2 ? <button className="primary-action" type="button" onClick={() => setPanelMode("application")}>Preparar aplicação <span>→</span></button> : null}
               </section>
@@ -345,18 +369,18 @@ export function ItapoaExperience() {
 
             {panelMode === "application" ? (
               <section className="application-panel">
-                <button className="back-button" type="button" onClick={() => setPanelMode("detail")}>← Voltar ao detalhe</button>
+                <button className="back-button" type="button" onClick={() => setPanelMode("detail")}>← Voltar à análise</button>
                 <span className="conversation-status"><i /> Rascunho da aplicação</span>
                 <h2>{draftReady ? "Tudo pronto para sua revisão." : "Pré-preenchimento preparado."}</h2>
-                <p className="detail-lead">A IA organizou os dados que serão levados ao portal. Nenhuma proposta será enviada sem sua confirmação.</p>
+                <p className="detail-lead">Os dados abaixo vêm do perfil e da oportunidade. Nenhuma proposta será enviada sem confirmação.</p>
                 <div className="application-sheet">
-                  <div>Empresa<span>JM Reparos · MEI</span></div>
-                  <div>Oportunidade<span>#{selected.id} · {selected.service}</span></div>
-                  <div>Local de execução<span>{selected.location}</span></div>
-                  <div>Escopo proposto<span>Mão de obra, materiais, transporte e limpeza final</span></div>
-                  <div>Prazo assumido<span>{selected.executionDeadline}</span></div>
+                  <div>Empresa<span>{profile.displayName} · {profile.legal.type}</span></div>
+                  <div>Oportunidade<span>#{selected.opportunityId} · {selected.serviceName}</span></div>
+                  <div>Compatibilidade calculada<span>{selectedMatch.score}% · modelo {matchResponse.scoringVersion}</span></div>
+                  <div>Local de execução<span>{locationLabel(selected)}</span></div>
+                  <div>Competências usadas<span>{selectedMatch.requiredSkills.filter((id) => profile.skills.some((skill) => skill.id === id)).map((id) => skillCatalog[id].shortLabel).join(", ")}</span></div>
+                  <div>Prazo publicado<span>{selected.executionDeadlineRaw}</span></div>
                 </div>
-                <div className="automation-note"><span>↗</span><div><b>Próxima etapa: computer use</b><p>A IA abre o portal, preenche o formulário e para antes do envio.</p></div></div>
                 <button className="primary-action" type="button" onClick={() => setDraftReady(true)}>{draftReady ? "Rascunho revisado ✓" : "Revisar dados da aplicação"}</button>
               </section>
             ) : null}
@@ -366,13 +390,51 @@ export function ItapoaExperience() {
 
       {profileOpen ? (
         <div className="modal-backdrop">
-          <section className="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+          <section className="profile-modal profile-editor" role="dialog" aria-modal="true" aria-labelledby="profile-title">
             <button className="modal-close" type="button" aria-label="Fechar perfil" onClick={() => setProfileOpen(false)}>×</button>
-            <span className="eyebrow">Perfil da empresa</span><h2 id="profile-title">JM Reparos</h2><p>Essas informações ajudam a IA a recomendar só o que sua empresa consegue executar.</p>
-            <div className="profile-fields"><div>Cidade de atendimento<span>Itapoá e região · raio de 40 km</span></div><div>Enquadramento<span>MEI · situação ativa</span></div><div>Serviços principais<span>Manutenção predial, elétrica e pequenos reparos</span></div><div>Capacidade<span>Equipe de 2 pessoas · veículo próprio</span></div></div>
-            <div className="document-row"><span>✓</span><div><b>Cartão CNPJ</b><small>Dados extraídos e verificados</small></div></div>
-            <div className="document-row pending"><span>+</span><div><b>Adicionar certificados</b><small>NR-10, NR-35 ou comprovantes técnicos</small></div></div>
-            <button className="primary-action" type="button" onClick={() => setProfileOpen(false)}>Salvar perfil</button>
+            <span className="eyebrow">Perfil usado pelo motor de match</span><h2 id="profile-title">{draftProfile.displayName}</h2>
+            <p>Este é um perfil simulado para a demo. Os serviços abaixo são declarações do prestador, não certificados verificados.</p>
+
+            <div className="profile-fields editable-fields">
+              <label>Empresa<input value={draftProfile.displayName} onChange={(event) => setDraftProfile((current) => ({ ...current, displayName: event.target.value }))} /></label>
+              <label>Responsável<input value={draftProfile.ownerName} onChange={(event) => setDraftProfile((current) => ({ ...current, ownerName: event.target.value }))} /></label>
+              <div>Enquadramento<span>MEI · situação ativa</span></div>
+              <label>Cidade<input value={draftProfile.baseLocation.city} onChange={(event) => setDraftProfile((current) => ({ ...current, baseLocation: { ...current.baseLocation, city: event.target.value } }))} /></label>
+              <label>Raio de atendimento (km)<input type="number" min="1" max="500" value={draftProfile.baseLocation.serviceRadiusKm} onChange={(event) => setDraftProfile((current) => ({ ...current, baseLocation: { ...current.baseLocation, serviceRadiusKm: Number(event.target.value) } }))} /></label>
+              <label>Tamanho da equipe<input type="number" min="1" max="100" value={draftProfile.teamSize} onChange={(event) => setDraftProfile((current) => ({ ...current, teamSize: Number(event.target.value) }))} /></label>
+            </div>
+
+            <fieldset className="profile-options">
+              <legend>Serviços que a empresa declara executar</legend>
+              {editableProfileSkillIds.map((skillId) => {
+                const skill = draftProfile.skills.find((item) => item.id === skillId);
+                return (
+                  <div className="profile-option" key={skillId}>
+                    <label aria-label={skillCatalog[skillId].label} htmlFor={`skill-${skillId}`}>
+                      <input id={`skill-${skillId}`} type="checkbox" checked={Boolean(skill)} onChange={(event) => toggleSkill(skillId, event.target.checked)} />
+                      <span><b>{skillCatalog[skillId].label}</b><small>{skill ? "Entra no cálculo" : "Fora do perfil"}</small></span>
+                    </label>
+                    <select aria-label={`Nível em ${skillCatalog[skillId].label}`} disabled={!skill} value={skill?.level ?? "experienced"} onChange={(event) => changeSkillLevel(skillId, event.target.value as SkillLevel)}>
+                      {Object.entries(levelLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
+                    </select>
+                  </div>
+                );
+              })}
+            </fieldset>
+
+            <fieldset className="profile-options capability-options">
+              <legend>Capacidade operacional</legend>
+              {(Object.entries(capabilityCatalog) as Array<[CapabilityId, string]>).map(([capabilityId, label]) => (
+                <label className="capability-option" key={capabilityId}>
+                  <input type="checkbox" checked={draftProfile.capabilities.includes(capabilityId)} onChange={(event) => toggleCapability(capabilityId, event.target.checked)} />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </fieldset>
+
+            <div className="profile-disclosure"><b>Como funciona agora</b><span>O perfil fica salvo neste navegador. Ao atualizar, a IA lê o texto público e extrai requisitos com evidências; o score compara somente o que foi declarado aqui.</span></div>
+            {profileError ? <p className="form-error" role="alert">{profileError}</p> : null}
+            <button className="primary-action" type="button" disabled={profileSaving || draftProfile.skills.length === 0} onClick={saveProfile}>{profileSaving ? "Recalculando 12 oportunidades…" : "Salvar perfil e recalcular matches"}</button>
           </section>
         </div>
       ) : null}
