@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
   CapabilityId,
   MatchApiResponse,
   MatchResult,
   OpportunitySnapshot,
+  PersistedState,
   ProviderProfile,
   PublicOpportunity,
   SkillId,
@@ -69,7 +70,8 @@ const matchLabel = (match: MatchResult) => {
 const paymentLabel = (opportunity: PublicOpportunity) =>
   [opportunity.payment.method, opportunity.payment.term].filter(Boolean).join(" · ") || "Não informado";
 
-export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: Props) {
+export function ItapoaExperience({ snapshot: initialSnapshot, initialProfile, initialMatches }: Props) {
+  const [snapshot, setSnapshot] = useState(initialSnapshot);
   const [profile, setProfile] = useState(initialProfile);
   const [draftProfile, setDraftProfile] = useState(initialProfile);
   const [matchResponse, setMatchResponse] = useState(initialMatches);
@@ -81,6 +83,23 @@ export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: P
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [draftReady, setDraftReady] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<PersistedState["lastRefresh"]>({ status: "seeded", source: "committed_snapshot", capturedAt: initialSnapshot.snapshot.capturedAt, opportunityCount: initialSnapshot.opportunities.length, requirementsCount: 0, model: null });
+
+  const applyState = (state: PersistedState) => {
+    setSnapshot(state.snapshot); setProfile(state.profile); setDraftProfile(state.profile); setMatchResponse(state.matches); setLastRefresh(state.lastRefresh);
+    const next = state.matches.matches.find((item) => item.band === "recommended") ?? state.matches.matches[0];
+    if (next) setSelectedId(next.opportunityId);
+  };
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/itapoa/state", { cache: "no-store" }).then(async (response) => {
+      if (!response.ok) throw new Error("Não foi possível carregar os dados persistidos."); return response.json() as Promise<PersistedState>;
+    }).then((state) => { if (active) applyState(state); }).catch((error) => { if (active) setRefreshMessage(error instanceof Error ? error.message : "Falha ao carregar o banco."); });
+    return () => { active = false; };
+  }, []);
 
   const opportunityById = useMemo(
     () => new Map(snapshot.opportunities.map((item) => [item.opportunityId, item])),
@@ -168,18 +187,14 @@ export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: P
     const nextProfile: ProviderProfile = { ...draftProfile, updatedAt: new Date().toISOString() };
 
     try {
-      const response = await fetch("/api/itapoa/matches", {
-        method: "POST",
+      const response = await fetch("/api/itapoa/profile", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ profile: nextProfile }),
       });
       if (!response.ok) throw new Error("Não foi possível recalcular os matches.");
-      const result = await response.json() as MatchApiResponse;
-      setProfile(nextProfile);
-      setDraftProfile(nextProfile);
-      setMatchResponse(result);
-      const firstRecommended = result.matches.find((match) => match.band === "recommended");
-      if (firstRecommended) setSelectedId(firstRecommended.opportunityId);
+      const result = await response.json() as PersistedState;
+      applyState(result);
       setPanelMode("detail");
       setProfileOpen(false);
     } catch (error) {
@@ -187,6 +202,20 @@ export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: P
     } finally {
       setProfileSaving(false);
     }
+  };
+
+  const refreshOpportunities = async () => {
+    setRefreshing(true); setRefreshMessage(null);
+    try {
+      const response = await fetch("/api/itapoa/refresh", { method: "POST" });
+      const result = await response.json() as PersistedState | { error: string; state?: PersistedState };
+      if (!response.ok) {
+        if ("state" in result && result.state) applyState(result.state);
+        throw new Error("error" in result ? result.error : "Falha ao atualizar oportunidades.");
+      }
+      applyState(result as PersistedState); setRefreshMessage("Oportunidades ao vivo atualizadas e comparadas com seu perfil.");
+    } catch (error) { setRefreshMessage(error instanceof Error ? error.message : "Falha ao atualizar oportunidades."); }
+    finally { setRefreshing(false); }
   };
 
   const selectedSkillLabels = profile.skills.map((skill) => skillCatalog[skill.id].shortLabel);
@@ -219,14 +248,18 @@ export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: P
       <section className="workspace" id="top">
         <header className="topbar">
           <div><span className="eyebrow">Itapoá · Santa Catarina</span><h1>{recommendedCount} oportunidades combinam com o perfil.</h1></div>
-          <div className="top-actions"><span className="snapshot"><i /> Snapshot público · {formatSnapshot(snapshot.snapshot.capturedAt)}</span></div>
+          <div className="top-actions">
+            <button className="snapshot refresh-opportunities" type="button" onClick={refreshOpportunities} disabled={refreshing}><i /> {refreshing ? "Coletando e analisando…" : "Atualizar oportunidades"}</button>
+            <small className="snapshot-meta">{lastRefresh.source === "live_contrata_brasil" ? "Atualização ao vivo" : "Snapshot público"} · {formatSnapshot(lastRefresh.capturedAt)}</small>
+            {refreshMessage ? <span className="refresh-message" role="status">{refreshMessage}</span> : null}
+          </div>
         </header>
 
         <section className="summary-strip" aria-label="Resumo do matching">
           <div><strong>{recommendedCount}</strong><span>recomendadas pelo perfil</span></div>
           <div><strong>{blockedCount}</strong><span>com impedimento detectado</span></div>
           <div><strong>{attachmentCount}</strong><span>fotos ou anexos validados</span></div>
-          <p><span aria-hidden="true">✦</span> Pontuação calculada com perfil, requisitos do serviço e capacidade operacional. Alertas não são escondidos pelo score.</p>
+          <p><span aria-hidden="true">✦</span> A IA extrai os requisitos de cada edital; a pontuação auditável compara esses requisitos com o perfil salvo. Alertas não são escondidos pelo score.</p>
         </section>
 
         <div className="profile-evidence-bar" aria-label="Perfil usado no cálculo">
@@ -362,11 +395,13 @@ export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: P
             <span className="eyebrow">Perfil usado pelo motor de match</span><h2 id="profile-title">{draftProfile.displayName}</h2>
             <p>Este é um perfil simulado para a demo. Os serviços abaixo são declarações do prestador, não certificados verificados.</p>
 
-            <div className="profile-fields">
-              <div>Responsável<span>{draftProfile.ownerName}</span></div>
+            <div className="profile-fields editable-fields">
+              <label>Empresa<input value={draftProfile.displayName} onChange={(event) => setDraftProfile((current) => ({ ...current, displayName: event.target.value }))} /></label>
+              <label>Responsável<input value={draftProfile.ownerName} onChange={(event) => setDraftProfile((current) => ({ ...current, ownerName: event.target.value }))} /></label>
               <div>Enquadramento<span>MEI · situação ativa</span></div>
-              <div>Área de atendimento<span>{draftProfile.baseLocation.city}/{draftProfile.baseLocation.state} · raio de {draftProfile.baseLocation.serviceRadiusKm} km</span></div>
-              <div>Capacidade<span>Responsável + 1 auxiliar · {draftProfile.teamSize} pessoas</span></div>
+              <label>Cidade<input value={draftProfile.baseLocation.city} onChange={(event) => setDraftProfile((current) => ({ ...current, baseLocation: { ...current.baseLocation, city: event.target.value } }))} /></label>
+              <label>Raio de atendimento (km)<input type="number" min="1" max="500" value={draftProfile.baseLocation.serviceRadiusKm} onChange={(event) => setDraftProfile((current) => ({ ...current, baseLocation: { ...current.baseLocation, serviceRadiusKm: Number(event.target.value) } }))} /></label>
+              <label>Tamanho da equipe<input type="number" min="1" max="100" value={draftProfile.teamSize} onChange={(event) => setDraftProfile((current) => ({ ...current, teamSize: Number(event.target.value) }))} /></label>
             </div>
 
             <fieldset className="profile-options">
@@ -397,7 +432,7 @@ export function ItapoaExperience({ snapshot, initialProfile, initialMatches }: P
               ))}
             </fieldset>
 
-            <div className="profile-disclosure"><b>Limite atual</b><span>O motor não atribui elétrica, serralheria, comunicação visual, chaveiro, automação de portão ou saneamento especializado a este perfil.</span></div>
+            <div className="profile-disclosure"><b>Como funciona agora</b><span>O perfil fica salvo neste navegador. Ao atualizar, a IA lê o texto público e extrai requisitos com evidências; o score compara somente o que foi declarado aqui.</span></div>
             {profileError ? <p className="form-error" role="alert">{profileError}</p> : null}
             <button className="primary-action" type="button" disabled={profileSaving || draftProfile.skills.length === 0} onClick={saveProfile}>{profileSaving ? "Recalculando 12 oportunidades…" : "Salvar perfil e recalcular matches"}</button>
           </section>

@@ -12,7 +12,13 @@ export type SkillId =
   | "outdoor_structures"
   | "locksmith"
   | "gate_automation"
-  | "sanitation_systems";
+  | "sanitation_systems"
+  | "painting"
+  | "carpentry"
+  | "hvac"
+  | "cleaning"
+  | "landscaping"
+  | "other";
 
 export type CapabilityId =
   | "technical_visit"
@@ -32,7 +38,7 @@ export type ProviderProfile = {
   id: string;
   displayName: string;
   ownerName: string;
-  demoProfile: true;
+  demoProfile: boolean;
   legal: {
     type: "MEI";
     status: "active";
@@ -138,9 +144,44 @@ export type MatchResult = {
   requiredCapabilities: CapabilityId[];
 };
 
+export type OpportunityRequirement = {
+  opportunityId: string;
+  summary: string;
+  skills: Array<{
+    id: SkillId;
+    importance: "required" | "supporting";
+    evidence: string;
+  }>;
+  capabilities: Array<{
+    id: CapabilityId;
+    required: boolean;
+    evidence: string;
+  }>;
+  complexity: "simple" | "multi_trade" | "specialized";
+  confidence: number;
+  model: string;
+  extractedAt: string;
+  contentHash: string;
+};
+
 export type MatchApiResponse = {
   profile: ProviderProfile;
   matches: MatchResult[];
   generatedAt: string;
-  scoringVersion: "itapoa-v1";
+  scoringVersion: "itapoa-v2-ai-requirements";
+};
+
+export type PersistedState = {
+  snapshot: OpportunitySnapshot;
+  profile: ProviderProfile;
+  matches: MatchApiResponse;
+  lastRefresh: {
+    status: "seeded" | "succeeded" | "failed" | "running";
+    source: "committed_snapshot" | "live_contrata_brasil";
+    capturedAt: string;
+    opportunityCount: number;
+    requirementsCount: number;
+    model: string | null;
+    message?: string;
+  };
 };

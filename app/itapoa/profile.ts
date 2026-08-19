@@ -13,6 +13,12 @@ export const skillCatalog: Record<SkillId, { label: string; shortLabel: string }
   locksmith: { label: "Chaveiro e fechaduras", shortLabel: "Chaveiro" },
   gate_automation: { label: "Automação de portões", shortLabel: "Portões automáticos" },
   sanitation_systems: { label: "Sistemas individuais de esgoto", shortLabel: "Tratamento de esgoto" },
+  painting: { label: "Pintura predial", shortLabel: "Pintura" },
+  carpentry: { label: "Carpintaria e marcenaria", shortLabel: "Carpintaria" },
+  hvac: { label: "Climatização e refrigeração", shortLabel: "Climatização" },
+  cleaning: { label: "Limpeza e conservação", shortLabel: "Limpeza" },
+  landscaping: { label: "Jardinagem e paisagismo", shortLabel: "Jardinagem" },
+  other: { label: "Outro serviço especializado", shortLabel: "Outro serviço" },
 };
 
 export const capabilityCatalog: Record<CapabilityId, string> = {
@@ -72,10 +78,4 @@ export const defaultProfile: ProviderProfile = {
   updatedAt: "2026-08-19T17:55:00.000-03:00",
 };
 
-export const editableProfileSkillIds: SkillId[] = [
-  "gutters_roofing",
-  "masonry",
-  "concrete_structures",
-  "basic_plumbing",
-  "drywall",
-];
+export const editableProfileSkillIds = Object.keys(skillCatalog) as SkillId[];

@@ -34,15 +34,14 @@ test("a raiz pública oferece exatamente os dois usuários pedidos", async () =>
   assert.doesNotMatch(html, /signin-with-chatgpt|codex-preview|Your site is taking shape/i);
 });
 
-test("o usuário de Itapoá recebe ranking calculado a partir do perfil", async () => {
+test("o usuário de Itapoá recebe atualização ao vivo e matching por IA", async () => {
   const html = await renderedHtml("/itapoa");
 
   assert.match(html, /<title>Empreiteiro em Itapoá \| Primeiro Contrato<\/title>/i);
-  assert.match(html, /2(?:<!-- -->)? oportunidades combinam com o perfil\./);
+  assert.match(html, /Atualizar oportunidades/);
+  assert.match(html, /A IA extrai os requisitos de cada edital/);
   assert.match(html, /Todas as oportunidades/);
   assert.match(html, /Instalação de Calhas e Rufos/);
-  assert.match(html, /97% compatível/);
-  assert.match(html, /90% · impedida/);
   assert.match(html, /JM Reparos Prediais/);
   assert.doesNotMatch(html, /og-user-choice\.png|og\.png/);
 });
@@ -78,7 +77,7 @@ test("a API entrega o snapshot auditável completo", async () => {
   assert.equal(response.headers.get("x-snapshot-captured-at"), body.snapshot.capturedAt);
 });
 
-test("a API recalcula matches quando as competências do perfil mudam", async () => {
+test("o fallback não inventa matches antes da extração semântica", async () => {
   const calculate = async (candidate) => {
     const response = await request("/api/itapoa/matches", {
       method: "POST",
@@ -90,18 +89,22 @@ test("a API recalcula matches quando as competências do perfil mudam", async ()
   };
 
   const baseline = await calculate(profile);
-  assert.deepEqual(
-    baseline.matches.filter((match) => match.band === "recommended").map((match) => match.opportunityId),
-    ["12908", "12672"],
-  );
+  assert.deepEqual(baseline.matches.filter((match) => match.band === "recommended"), []);
+  assert.equal(baseline.scoringVersion, "itapoa-v2-ai-requirements");
   assert.equal(baseline.matches.filter((match) => match.blocked).length, 5);
   assert.equal(baseline.matches.find((match) => match.opportunityId === "12644").blocked, true);
+});
 
-  const reduced = await calculate({
-    ...profile,
-    skills: profile.skills.filter((skill) => !["gutters_roofing", "basic_plumbing"].includes(skill.id)),
-  });
-  assert.deepEqual(reduced.matches.filter((match) => match.band === "recommended"), []);
+test("o código usa Responses API estruturada e não contém mapa manual por ID", async () => {
+  const [ai, matching, hosting] = await Promise.all([
+    readFile(new URL("../app/itapoa/ai.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/itapoa/matching.ts", import.meta.url), "utf8"),
+    readFile(new URL("../.openai/hosting.json", import.meta.url), "utf8"),
+  ]);
+  assert.match(ai, /api\.openai\.com\/v1\/responses/);
+  assert.match(ai, /json_schema/);
+  assert.doesNotMatch(matching, /requirementsByOpportunity/);
+  assert.equal(JSON.parse(hosting).d1, "DB");
 });
 
 test("novo usuário permanece numa rota separada e honesta", async () => {
