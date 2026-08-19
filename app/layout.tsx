@@ -17,15 +17,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const imageUrl = `${protocol}://${host}/og.png`;
-  const title = "Primeiro Contrato — oportunidades públicas para pequenos negócios";
-  const description = "Oportunidades públicas que combinam com o seu negócio.";
+  const imageUrl = `${protocol}://${host}/og-user-choice.png`;
+  const title = "Primeiro Contrato — escolha seu usuário";
+  const description = "Escolha uma experiência e encontre oportunidades públicas que combinam com o seu negócio.";
 
   return {
     title,
     description,
     icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
-    openGraph: { title, description, images: [{ url: imageUrl, width: 1728, height: 910 }] },
+    openGraph: { title, description, images: [{ url: imageUrl, width: 1727, height: 910 }] },
     twitter: { card: "summary_large_image", title, description, images: [imageUrl] },
   };
 }
