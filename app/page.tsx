@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function UserChoicePage() {
   return (
     <main className="identity-gate">
@@ -19,7 +17,7 @@ export default function UserChoicePage() {
         </div>
 
         <nav className="identity-options" aria-label="Usuários disponíveis">
-          <Link className="identity-option identity-option-primary" href="/itapoa">
+          <a className="identity-option identity-option-primary" href="/itapoa">
             <span className="identity-avatar" aria-hidden="true">JM</span>
             <span className="identity-option-copy">
               <small>Perfil pronto para a demonstração</small>
@@ -27,9 +25,9 @@ export default function UserChoicePage() {
               <span>Acessar um perfil pronto com oportunidades locais ordenadas.</span>
             </span>
             <span className="identity-arrow" aria-hidden="true">→</span>
-          </Link>
+          </a>
 
-          <Link className="identity-option" href="/novo-usuario">
+          <a className="identity-option" href="/novo-usuario">
             <span className="identity-avatar identity-avatar-new" aria-hidden="true">+</span>
             <span className="identity-option-copy">
               <small>Onboarding assistido</small>
@@ -37,7 +35,7 @@ export default function UserChoicePage() {
               <span>Informar o CNPJ, revisar os dados encontrados e montar o perfil.</span>
             </span>
             <span className="identity-arrow" aria-hidden="true">→</span>
-          </Link>
+          </a>
         </nav>
 
         <footer className="identity-footnote">
